@@ -1,0 +1,1681 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Vaccination API
+  description: This doc describe all the features and api-end points of vaccination app
+  contact:
+    name: Dev
+    email: dev@dev.com
+    url: 'https://dev.com'
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - description: Dev
+    url: 'http://localhost:8000/api/v1'
+  - description: SwaggerHub API Auto Mocking
+    url: 
+      https://virtserver.swaggerhub.com/Learning-SwaggerAPI/Vaccination-API/1.0.0
+tags:
+  - name: Auth
+    description: Authentication Endpoints
+  - name: Appointments
+    description: Appointments Endpoints
+  - name: Users
+    description: User Profile Endpoints
+  - name: Reviews
+    description: Description Endpoints
+  - name: Admin
+    description: Admin Endpoints
+  - name: Doctor
+    description: Doctors Endpoints
+paths:
+  '/auth/register':
+    post:
+      description: create a new account
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Abdullah Alamin
+                email:
+                  type: string
+                  format: email
+                  example: alamin@example.com
+                password:
+                  type: string
+                  format: password
+                  example: PassWord123
+              required:
+                - name
+                - email
+                - password
+      responses:
+        '201':
+          description: Signup successul
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: Signup successful
+                  data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        example: >-
+                          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /auth/signup
+                      signin:
+                        type: string
+                        example: /auth/signin
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/auth/login':
+    post:
+      description: Login to your account
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: alamin@example.com
+                password:
+                  type: string
+                  format: password
+                  example: PassWord123
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Signin successul
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Signin successful
+                  data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        example: >-
+                          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /auth/signin
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/auth/forgot-password':
+    post:
+      description: Forgot account password
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: tester@test.com
+              required:
+                - email
+      responses:
+        '200':
+          description: Please check your email to reset the password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Please check your email inbox
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /auth/forgot-password
+                      login:
+                        type: string
+                        example: /auth/login
+  '/availability':
+    get:
+      tags:
+        - Appointments
+      description: Retrive all available appointment dates
+      responses:
+        '200':
+          description: Return a list of available dates for appointment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Available slots list fetched successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date-time
+        '500':
+          $ref: '#/components/responses/500'
+  '/appointments':
+    get:
+      operationId: getAllAppointment
+      security:
+        - bearerAuth: []
+      tags:
+        - Appointments
+      description: Retrive all appointents
+      parameters:
+        - $ref: "#/components/parameters/pageParam"
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/sortTypeParam"
+        - $ref: "#/components/parameters/sortByParam"
+        - $ref: "#/components/parameters/searchParam"
+      responses:
+        '200':
+          description: Return a list of appointments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Appoinemts fetched successfully
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int32
+                              example: 1
+                            vacine:
+                              type: string
+                              enum:
+                                - Covid
+                                - Viral
+                                - Pneumonia
+                              example: Viral
+                            status:
+                              type: string
+                              enum:
+                                - pending
+                                - complete
+                              example: pending
+                            link:
+                              type: string
+                              format: url
+                              example: /appointments/1
+                            appointeme-time:
+                              type: string
+                              format: date-time
+                          required:
+                            - id
+                            - title
+                            - author
+                            - appointeme-time
+                        - $ref: '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /appointments
+                      review:
+                        type: string
+                        example: /reviews
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      operationId: createAppointment
+      security:
+        - bearerAuth: []
+      description: create a new appoinment
+      tags:
+        - Appointments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vaccine:
+                  type: string
+                  example: viral-shot
+                date:
+                  type: string
+                  format: date
+              required:
+                - vaccine
+                - date
+      responses:
+        '201':
+          description: Appointment creation successul
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: Booking Successful
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: '5#3ejhhjge'
+                      name:
+                        type: string
+                        example: John Doe
+                      vaccine:
+                        type: string
+                        example: viral
+                      time:
+                        type: string
+                        format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /appoinments
+                      reviews:
+                        type: string
+                        example: /reviews/viral-shot
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/appointments/{id}':
+    get:
+      operationId: getSingleAppointment
+      security:
+        - bearerAuth: []
+      tags:
+        - Appointments
+      description: Retrive a single appointment
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+        - in: query
+          name: expand
+          description: expand reviews
+          schema:
+            type: string
+            example: "user"
+      responses:
+        '200':
+          description: Appoinment details fetched successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                      - $ref: '#/components/schemas/Appointment'
+                      - type: object
+                        properties:
+                          reviews:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/Reviews'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /appointments/1
+                      appointments:
+                        type: string
+                        example: /appointments
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+        - Appointments
+      description: Partially update an appointment
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vaccine:
+                  type: string
+                  example: Pnemonia shot
+                date:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: Successfully Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentUpdateDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Appointments
+      description: Delete an appointment by id
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+      responses:
+        '204':
+          description: Appointment deleted successfully
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/users': 
+    get:
+      operationId: getAllUsers
+      security:
+        - bearerAuth: []
+      tags:
+        - Admin
+      description: Retrive all users
+      parameters:
+          - in: query
+            name: expand
+            description: expand vaccine, role,review, status object
+            schema:
+               type: string
+               example: vaccine,role,review,status
+      responses:
+        '200':
+          description: Return a list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Appoinemts fetched successfully
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int32
+                              example: 1
+                            name:
+                              type: string
+                              example: John Doe
+                            email:
+                              type: string
+                              example: john123@example.com
+                            role: 
+                              type: string
+                              enum: [User, Admin]
+                              example: [User,Admin]
+                            vacination:
+                              type: string
+                              enum: [Covid,Viral,Pneumonia]
+                              example: Viral
+                            photo:
+                              type: string
+                              format: url
+                              example: "https://s3.aws.com/myfirstblog/124.jpg"
+                            status:
+                              type: string
+                              enum:
+                                - pending
+                                - complete
+                              example: pending
+                            link:
+                              type: string
+                              format: url
+                              example: /appointments/1
+                          required:
+                            - id
+                            - title
+                            - author
+                            - appointeme-time
+                        - $ref: '#/components/schemas/Timestamp'
+                  pagination: 
+                        $ref: "#/components/schemas/Pagination"      
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /appointments
+                      review:
+                        type: string
+                        example: /reviews
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      operationId: createAnUser
+      security:
+          - bearerAuth: []
+      description: create a new account
+      tags:
+        - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Abdullah Alamin
+                email:
+                  type: string
+                  format: email
+                  example: alamin@example.com
+                password:
+                  type: string
+                  format: password
+                  example: PassWord123
+              required:
+                - name
+                - email
+                - password
+      responses:
+        '201':
+          description: User created successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: User created successful
+                  data:
+                    type: object
+                    properties:
+                      id:
+                       type: string
+                       example: g#dsjhdfhg
+                      name: 
+                        type: string
+                        example: John Doe
+                      email:
+                        type: string
+                        format: email
+                        example: john@abc.com
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /auth/signup
+                      users:
+                        type: string
+                        example: /users
+                      vaccines: 
+                        type: string
+                        example: /vaccines
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+        '401':
+          $ref: '#/components/responses/401'  
+    patch:
+      operationId: updateAnUser
+      security:
+        - bearerAuth: []
+      tags:
+        - Admin
+      description: Partially update an user
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  example: john@abc.com
+                password:
+                  type: string
+                  example: secret
+                vaccination:
+                  type: string
+                  enum: [Pneumonia, Covid]
+                  example: [Pneumonia]
+      responses:
+        '200':
+          description: Successfully Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentUpdateDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/users/profile':
+    get:
+      operationId: getProfileDetails
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+      description: Fetch profile details
+      responses:
+        '200':
+          description: Profile data fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Profile data fetched successfully
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: John Doe
+                      email:
+                        type: string
+                        format: email
+                        example: john@abc.com
+                      photo: 
+                        type: string
+                        format: url
+                        example: https://s3.aws.com/myfirstblog/124.jpg
+                      vaccination:
+                        type: string
+                        enum: [Covisheild,Pnemonia,Viral]
+                        example: ["Covisheild", "Pnemonia"]
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /profile
+                      appointments:
+                        type: string
+                        example: /appoinments
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      operationId: updateProfileDetails
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+      requestBody:
+         content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Jonathon Doe
+                  photo:
+                    type: string
+                    format: url
+                    example: https://s3.aws.com/myfirstblog/134.jpg
+      responses:
+        '200':
+          description: Profile data updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Profile data updated successfully
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: Jonathon Doe
+                      email:
+                        type: string
+                        format: email
+                        example: john@abc.com
+                      photo: 
+                        type: string
+                        format: url
+                        example: https://s3.aws.com/myfirstblog/134.jpg
+                      vaccination:
+                        type: string
+                        enum: [Covisheild,Pnemonia,Viral]
+                        example: ["Covisheild", "Pnemonia"]
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /profile
+                      appointments:
+                        type: string
+                        example: /appoinments
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  '/users/{id}':
+    get: 
+     operationId: getSingleUser
+     tags: [Doctor]
+     description: Get a single user's detail
+     parameters:
+        - $ref: '#/components/parameters/idPathParam'
+     responses:
+        '200':
+          description: User's data fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Profile data fetched successfully
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: John Doe
+                      email:
+                        type: string
+                        format: email
+                        example: john@abc.com
+                      photo: 
+                        type: string
+                        format: url
+                        example: https://s3.aws.com/myfirstblog/124.jpg
+                      role: 
+                        type: string
+                        enum: [Admin,Docter,Paitent]
+                        example: Paitent
+                      vaccination:
+                        type: string
+                        enum: [Covisheild,Pnemonia,Viral]
+                        example: ["Covisheild", "Pnemonia"]
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /profile
+                      appointments:
+                        type: string
+                        example: /appoinments
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      operationId: updateUserDetails
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'  
+      tags:
+        - Doctor
+      requestBody:
+         content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Jonathon Doe
+                  photo:
+                    type: string
+                    format: url
+                    example: https://s3.aws.com/myfirstblog/134.jpg
+                  vaccination:
+                        type: array
+                        items:
+                          type: string
+                          enum: ["complete", "pending"]
+                  status:
+                    type: string
+                    enum: ['pending', 'complete']
+                    example: 'complete'
+                  password: 
+                    type: string
+                    format: password
+                    example: 'password'
+
+      responses:
+        '200':
+          description: User data updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: User data updated successfully
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: Jonathon Doe
+                      email:
+                        type: string
+                        format: email
+                        example: john@abc.com
+                      photo: 
+                        type: string
+                        format: url
+                        example: https://s3.aws.com/myfirstblog/134.jpg
+                      vaccination:
+                        type: string
+                        enum: 
+                          - Covisheild
+                          - Pnemonia
+                        example: ["Covisheild", "Pnemonia"]
+                      # status: 
+                      #     type: string
+                      #     enum: [Complete, Pending]
+                      #     example: Pending
+                      role: 
+                          type: string
+                          enum: [Admin,Docter,Paitent]
+                          example: Paitent 
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /profile
+                      appointments:
+                        type: string
+                        example: /appoinments
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500' 
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Doctor
+      description: Delete an user by id
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+      responses:
+        '204':
+          description: User deleted successfully
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/reviews':
+    get:
+     operationId: getAllReviews
+     tags: [Reviews]
+     description: Retrive all reviews
+     parameters:
+          - in: query
+            name: expand
+            description: expand user vaccine object
+            schema:
+              type: string
+              example: "user,vaccine"
+     responses:
+      "200":
+          description: "Single Appointment view"
+          content:
+            "application/json":
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Reviews fetched successfully"
+                  reviews:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Reviews"
+                  pagination:
+                      $ref: "#/components/schemas/Pagination"
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: url
+                        example: "/reviews?page=2&limit=10"
+                      next:
+                        type: string
+                        format: url
+                        example: "/reviews?page=3&limit=10"
+                      prev:
+                        type: string
+                        format: url
+                        example: "/reviews?page=1&limit=10"
+                      appointments:
+                        type: string
+                        example: "/appointments"
+      '400':
+        $ref: '#/components/responses/400'
+      '500':
+        $ref: '#/components/responses/500' 
+    post:   
+      operationId: postReview
+      security:
+        - bearerAuth: []
+      description: Give a review
+      tags: [Reviews]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  example: 'Sample review text'
+                vaccinetedId:
+                  type: string
+                  example: '123#'
+                appointmentId:
+                  type: string
+                  example: '123#'
+              required: [body, vaccinetedId,appointmentId]
+      responses:
+        "201":
+         description: Review posted successully
+         content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example:  Review created successful
+                  data:
+                    $ref: "#/components/schemas/Reviews"
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: url
+                        example: "/reviews"
+        '401':
+           $ref: '#/components/responses/401'
+        '400':
+           $ref: '#/components/responses/400'
+        '500':
+           $ref: '#/components/responses/500' 
+  '/reviews/{id}':
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+        - Reviews
+      description: Partially update an review
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  example: Updated review 1
+                status:
+                  type: string
+                  enum: [Active, Pending, Declined]
+                  example: Pending
+      responses:
+        '200':
+          description: Successfully Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Reviews updated successfully"
+                  review:
+                      $ref: "#/components/schemas/Reviews"
+                  links:
+                    type: object
+                    properties:
+                      appointments:
+                        type: string
+                        example: "/appointments"
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Reviews
+      description: Delete an review by id
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+      responses:
+        '204':
+          description: Review deleted successfully
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/vaccines':
+    get:
+      operationId: getAllVaccines
+      security:
+        - bearerAuth: []
+      tags:
+        - Admin
+      description: Retrive all vaccine
+      responses:
+        '200':
+          description: Return a list of vaccine
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Vaccins fetched successfully
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int32
+                              example: 1
+                            name:
+                              type: string
+                              example: Covid
+                            createdAt:
+                              type: string
+                              format: date-time
+                            updatedAt:
+                              type: string
+                              format: date-time  
+                            link:
+                              type: string
+                              format: url
+                              example: /vaccine/1
+                          required:
+                            - id
+                            - title
+                            - author
+                            - appointeme-time
+                        - $ref: '#/components/schemas/Timestamp'
+                  pagination: 
+                        $ref: "#/components/schemas/Pagination"       
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /vaccins
+                      review:
+                        type: string
+                        example: /reviews
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      operationId: addVaccine
+      security: 
+        - bearerAuth: []
+      description: create a new account
+      tags:
+        - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 'Viral shot'
+                vaccine-id:
+                  type: string
+                  example: 65#bdh
+              required:
+                - name
+                - vaccine-id
+      responses:
+        '201':
+          description: Vaccine added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example:  Vaccine added successfully
+                  data:
+                    type: object
+                    properties:
+                      id:
+                       type: string
+                       example: g#dsjhdfhg
+                      name: 
+                        type: string
+                        example: John Doe
+                      email:
+                        type: string
+                        format: email
+                        example: john@abc.com
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /vaccins
+                      users:
+                        type: string
+                        example: /users
+                      reviews: 
+                        type: string
+                        example: /reviews
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+        '401':
+          $ref: '#/components/responses/401'  
+  '/vaccins/{id}':
+    delete:
+      operationId: deleteVaccine
+      security:
+        - bearerAuth: []
+      tags:
+        - Admin
+      description: Delete a vaccine by id
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+      responses:
+        '204':
+          description: Vaccine deleted successfully
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/change_admin/{id}':
+   patch:
+      operationId: changeAdmin
+      security:
+        - bearerAuth: []
+      tags:
+        - Admin
+      description: Change Admin 
+      parameters:
+        - $ref: '#/components/parameters/idPathParam'
+      responses:
+        '200':
+          description: Admin updated successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Admin updated successfully
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: Jonathon Doe
+                      email:
+                        type: string
+                        format: email
+                        example: john@abc.com
+
+                      role: 
+                          type: string
+                          enum: [Admin,Docter,Paitent]
+                          example: Admin 
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /admin
+                      appointments:
+                        type: string
+                        example: /appoinments
+                      users:
+                        type: string
+                        example: /users
+                      vaccines:
+                        type: string
+                        example: /vaccines
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401' 
+        '500':
+          $ref: '#/components/responses/500' 
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Appointment:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+              example: 1
+            userId:
+              type: integer
+              format: int32
+              example: 1
+            vaccine:
+              type: string
+              example: Covisheild
+            status:
+              type: string
+              enum:
+                - Complete
+                - Pending
+              example: Complete
+            appintment_at:
+              format: date-time
+          required:
+            - id
+            - vaccine
+            - appintment_at
+        - $ref: '#/components/schemas/Timestamp'
+    AppointmentCreateDTO:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 201
+        message:
+          type: string
+          example: Appointment created successfully
+        data:
+          $ref: '#/components/schemas/Appointment'
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: url
+              example: /appointments/1
+            author:
+              type: string
+              format: url
+              example: /appointments/1/author
+            review:
+              type: string
+              format: url
+              example: /appointments/1/review
+    AppointmentUpdateDTO:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 200
+        message:
+          type: string
+          example: Appointment updated successfully
+        data:
+          $ref: '#/components/schemas/Appointment'
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              example: /appointments/1
+            appoinments:
+              type: string
+              example: /appointments
+    Reviews:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+              example: 1
+            userId:
+              type: integer
+              format: int32
+              example: 1
+            vaccineId:
+              type: integer
+              format: int32
+              example: 1
+            comment:
+              type: string
+              format: text
+              example: The body of the comment
+            status:
+              type: string
+              enum:
+                - public
+                - private
+              example: public
+          required:
+            - id
+            - userId
+            - vaccineId
+            - body
+            - status
+        - $ref: '#/components/schemas/Timestamp'
+    Timestamp:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - createdAt
+        - updatedAt
+    AuthorDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        name:
+          type: string
+          example: A.B Raihan
+      required:
+        - id
+        - name
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          example: 2
+        limit:
+          type: integer
+          format: int32
+          example: 10
+        next:
+          type: integer
+          format: int32
+          example: 3
+        prev:
+          type: integer
+          format: int32
+          example: 1
+        totalPage:
+          type: integer
+          format: int32
+          example: 5
+        totalItems:
+          type: integer
+          format: int32
+          example: 50
+      required:
+        - page
+        - limit
+        - totalPage
+        - totalItems
+  responses:
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+                example: 400
+              error:
+                type: string
+                example: Bad Request
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    field:
+                      type: string
+                      example: email
+                    message:
+                      type: string
+                      example: Invalid email
+                    in:
+                      type: string
+                      enum:
+                        - query
+                        - body
+                      example: body
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+                example: 401
+              error:
+                type: string
+                example: Unauthorized
+              message:
+                type: string
+                example: You don't have the right permissions
+    '404':
+      description: Resource Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+                example: 404
+              error:
+                type: string
+                example: Not Found
+              message:
+                type: string
+                example: Requested resource not found
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+                example: 500
+              error:
+                type: string
+                example: Internal Server Error
+              message:
+                type: string
+                example: We are sorry for the inconvenience. Please try again later
+  parameters:
+    pageParam:
+      in: query
+      name: page
+      description: current page number
+      schema:
+        type: integer
+        format: int32
+        example: 2
+    limitParam:
+      in: query
+      name: limit
+      description: maximum items to be returned
+      schema:
+        type: integer
+        format: int32
+        example: 10
+    sortTypeParam:
+      in: query
+      name: sort_type
+      description: type of sort (asc or dsc)
+      schema:
+        type: string
+        enum:
+          - asc
+          - dsc
+        example: dsc
+    sortByParam:
+      in: query
+      name: sort_by
+      description: Sort key
+      schema:
+        type: string
+        example: createdAt
+    searchParam:
+      in: query
+      name: search
+      description: Search term
+      schema:
+        type: string
+        example: sourav
+    idQueryParam:
+      in: query
+      name: appointment
+      description: item identifier
+      schema:
+        type: string
+        example: 1
+    idPathParam:
+      in: path
+      name: id
+      required: true
+      description: item Id
+      schema:
+        type: string
+        example: 1
