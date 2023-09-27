@@ -64,10 +64,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 201
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 201
                   message:
                     type: string
                     example: Signup successful
@@ -121,10 +121,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 200
                   message:
                     type: string
                     example: Signin successful
@@ -170,10 +170,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 200
                   message:
                     type: string
                     example: Please check your email inbox
@@ -199,20 +199,19 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   example: 200
                   message:
                     type: string
                     example: Available slots list fetched successfully
                   data:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        date:
-                          type: string
-                          format: date-time
+                      type: string
+                    example: 
+                           - '2023-09-23'
+                           - '2023-09-24'
         '500':
           $ref: '#/components/responses/500'
   '/appointments':
@@ -237,9 +236,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   example: 200
                   message:
                     type: string
                     example: Appoinemts fetched successfully
@@ -322,10 +321,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 201
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 201
                   message:
                     type: string
                     example: Booking Successful
@@ -480,9 +479,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   example: 200
                   message:
                     type: string
                     example: Appoinemts fetched successfully
@@ -581,10 +580,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 201
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 201
                   message:
                     type: string
                     example: User created successful
@@ -679,10 +678,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 200
                   message:
                     type: string
                     example: Profile data fetched successfully
@@ -750,10 +749,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 200
                   message:
                     type: string
                     example: Profile data updated successfully
@@ -809,10 +808,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 200
                   message:
                     type: string
                     example: Profile data fetched successfully
@@ -900,10 +899,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 200
                   message:
                     type: string
                     example: User data updated successfully
@@ -991,9 +990,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   example: 200
                   message:
                     type: string
                     example: "Reviews fetched successfully"
@@ -1055,10 +1054,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 201
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 201
                   message:
                     type: string
                     example:  Review created successful
@@ -1107,9 +1106,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   example: 200
                   message:
                     type: string
                     example: "Reviews updated successfully"
@@ -1162,9 +1161,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   example: 200
                   message:
                     type: string
                     example: Vaccins fetched successfully
@@ -1242,10 +1241,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 201
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 201
                   message:
                     type: string
                     example:  Vaccine added successfully
@@ -1317,10 +1316,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 200
+                  # code:
+                  #   type: integer
+                  #   format: int32
+                  #   example: 200
                   message:
                     type: string
                     example: Admin updated successfully
@@ -1405,10 +1404,10 @@ components:
     AppointmentCreateDTO:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-          example: 201
+        # code:
+        #   type: integer
+        #   format: int32
+        #   example: 201
         message:
           type: string
           example: Appointment created successfully
@@ -1432,10 +1431,10 @@ components:
     AppointmentUpdateDTO:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-          example: 200
+        # code:
+        #   type: integer
+        #   format: int32
+        #   example: 200
         message:
           type: string
           example: Appointment updated successfully
@@ -1548,10 +1547,10 @@ components:
           schema:
             type: object
             properties:
-              code:
-                type: integer
-                format: int32
-                example: 400
+              # code:
+              #   type: integer
+              #   format: int32
+              #   example: 400
               error:
                 type: string
                 example: Bad Request
@@ -1579,10 +1578,10 @@ components:
           schema:
             type: object
             properties:
-              code:
-                type: integer
-                format: int32
-                example: 401
+              # code:
+              #   type: integer
+              #   format: int32
+              #   example: 401
               error:
                 type: string
                 example: Unauthorized
@@ -1596,10 +1595,10 @@ components:
           schema:
             type: object
             properties:
-              code:
-                type: integer
-                format: int32
-                example: 404
+              # code:
+              #   type: integer
+              #   format: int32
+              #   example: 404
               error:
                 type: string
                 example: Not Found
@@ -1613,10 +1612,10 @@ components:
           schema:
             type: object
             properties:
-              code:
-                type: integer
-                format: int32
-                example: 500
+              # code:
+              #   type: integer
+              #   format: int32
+              #   example: 500
               error:
                 type: string
                 example: Internal Server Error

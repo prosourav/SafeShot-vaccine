@@ -22,13 +22,16 @@ const userSchema = new Schema(
     photo: String,
     status: {
       type: String,
-      enum: ['approved', 'blocked'],
-      default: 'approved',
+      enum: ['approved', 'blocked', 'pending'],
+      default: 'pending',
     },
     vaccines: {
       type: [Schema.ObjectId],
     },
-
+    token: {
+      type: String,
+      default: null,
+    }
   },
   { timestamps: true },
 

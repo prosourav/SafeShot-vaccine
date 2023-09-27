@@ -1,7 +1,8 @@
 const router = require('express').Router();
-// const { controllers: authController } = require('../api/v1/auth');
-// const { getAvailability } = require('../api/v1/availability');
+const { authValidator, } = require('../validators');
+const { controllers: authController } = require('../api/v1/auth');
 const { controllers: appointmentController } = require('../api/v1/appointment');
+const { requestValidator } = require('../middleware/requestValidator');
 // const { controllers: userController } = require('../api/v1/user');
 // const { controllers: reviewController } = require('../api/v1/review');
 // const authenticate = require('../middleware/authenticate');
@@ -11,17 +12,18 @@ const { controllers: appointmentController } = require('../api/v1/appointment');
 // const haspPermission = require('../middleware/hasPermission');
 
 
-
-// Auth routes
-// router
-//   .post('/api/v1/auth/register', authController.register)
-  // .post('/api/v1/auth/login', authController.login);
-// will do in next version
-// .post('/api/v1/auth/reset-password', authController.resetPassword);
-
 router
   .get('/api/v1/availability', appointmentController.availability);
 
+router
+  .get('/api/v1/verify/:token', authController.verifyUserToken);
+
+// Auth routes
+router
+  .post('/api/v1/auth/register', authValidator.registerRequestValidator, requestValidator, authController.register)
+// .post('/api/v1/auth/login', authController.login);
+// will do in next version
+// .post('/api/v1/auth/reset-password', authController.resetPassword);
 
 // router
 //   .route('/api/v1/appointments')

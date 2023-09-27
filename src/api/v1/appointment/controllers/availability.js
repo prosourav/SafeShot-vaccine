@@ -4,21 +4,19 @@ const availability = async (_req, res, next) => {
 
   try {
 
-    let appointments = await appointmentService.availability();
+    let availableDates = await appointmentService.availability();
 
-    // console.log(appointments);
+    const response = {
+      code: 200,
+      message: 'Available Dates Fetched Successfully',
+      data: availableDates,
+      links: {
+        self: `/availability`,
+        login: `/login`
+      },
+    };
 
-    // const response = {
-    //   code: 201,
-    //   message: 'Appointment Created Successfully',
-    // data: { ...appointment },
-    //   links: {
-    //     self: `/appointments`,
-    //     reviews: `/reviews/${appointment.vaccine}`
-    //   },
-    // };
-
-    res.status(200).json(appointments);
+    res.status(200).json(response);
   } catch (e) {
     next(e);
   }

@@ -1,3 +1,117 @@
 GET http://localhost:8000/api/v1/availability
+
+###
+POST http://localhost:8000/api/v1/auth/register
 Content-Type: application/json
+
+{
+  "name": "Pritam",
+  "email":"cirdizuste@gufum.com",
+  "password":"PassWord@123"
+}
+
+###
+POST http://localhost:8000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email":"admin@example.com",
+  "password":"PassWord123"
+}
+
+###
+POST  http://localhost:8000/api/v1/appointments
+
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ4ODYyNjYsImV4cCI6MTY5NDkyMjI2Nn0.7AJSwUUz6-vKH6-_acug4wwMhuim9c0pQH84HCWoutA
+
+{
+  "vaccine": "Viral",
+  "date": "2023-09-11"
+}
+
+###
+GET  http://localhost:8000/api/v1/appointments?page=1&limit=2&sort_by=createdAt&sort_type=dsc
+Content-Type: application/application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ4ODYyNjYsImV4cCI6MTY5NDkyMjI2Nn0.7AJSwUUz6-vKH6-_acug4wwMhuim9c0pQH84HCWoutA
+
+
+###
+GET  http://localhost:8000/api/v1/appointments/6501343662c8cd16c4d5fe4d?expand=user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ4ODYyNjYsImV4cCI6MTY5NDkyMjI2Nn0.7AJSwUUz6-vKH6-_acug4wwMhuim9c0pQH84HCWoutA
+
+###
+GET  http://localhost:8000/api/v1/reviews?page=1&limit=2&sort_by=createdAt&sort_type=dsc&filter=approved&expand=user,appointment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxNmFkYzllZDc1OTMzZTQ1NDkzMyIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoic291cmF2QGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTQ5NTI0NDEsImV4cCI6MTY5NDk4ODQ0MX0.mUNz2LPv8PhKzR3t_Uyf9iiK7QHhS4YKQT-_9CqzvU8
+
+###
+POST http://localhost:8000/api/v1/reviews
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmZmYWM2YjkwZTYxZTYwZDRjY2IwMiIsIm5hbWUiOiIgQWJkIEFsYW1pbiIsImVtYWlsIjoiYWxhbWluQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTQ5MDQ1MjAsImV4cCI6MTY5NDk0MDUyMH0.EFhiP0MNNaEqyZtV_S0Zd6q2wVcav2IiUnCE39o5NMA
+
+{
+  "body": "1st comment of alamin viaya",
+  "appointmentId": "65004153e7c4ce7ec1a53f82"
+}
+
+###
+PATCH http://localhost:8000/api/v1/reviews/65061eaeca451acd61f0fc1f
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ5MDM3NTIsImV4cCI6MTY5NDkzOTc1Mn0.n3Jhoj6vXwId5x2Lc0JR0r2xA5dEhUqb6BGW-4QKNA4
+
+{
+  "body": "3nd comment",
+  "status": "approved"
+}
+
+###
+DELETE  http://localhost:8000/api/v1/reviews/650631782a7e67c6f38d4138
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmZmYWM2YjkwZTYxZTYwZDRjY2IwMiIsIm5hbWUiOiIgQWJkIEFsYW1pbiIsImVtYWlsIjoiYWxhbWluQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTQ5MDQ1MjAsImV4cCI6MTY5NDk0MDUyMH0.EFhiP0MNNaEqyZtV_S0Zd6q2wVcav2IiUnCE39o5NMA
+
+###
+GET http://localhost:8000/api/v1/users?page=1&limit=1&sort_by=createdAt&sort_type=dsc&search=j
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ5NjMwNzUsImV4cCI6MTY5NDk5OTA3NX0.Q_c2CrmqvZqGkSyugWrebqJ0wdrJYnQCwJ3akmFYQA8
+
+###
+POST  http://localhost:8000/api/v1/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ5NjMwNzUsImV4cCI6MTY5NDk5OTA3NX0.Q_c2CrmqvZqGkSyugWrebqJ0wdrJYnQCwJ3akmFYQA8
+
+{
+  "name": "newUser4",
+  "email":"newUser4@example.com",
+  "password":"PassWord123"
+}
+
+###
+GET http://localhost:8000/api/v1/users/64fffac6b90e61e60d4ccb02
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxNmFkYzllZDc1OTMzZTQ1NDkzMyIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoic291cmF2QGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTQ4OTY3NDcsImV4cCI6MTY5NDkzMjc0N30.wkCXozmvNJXb5pTz5VQE42WvcYwsTt5WtqW-TUacJo8
+
+###
+PATCH http://localhost:8000/api/v1/users/64fffac6b90e61e60d4ccb02
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ4NjU0MzUsImV4cCI6MTY5NDkwMTQzNX0.HqmCnZgNcKPXNyrkLEOmN6LkM0W1cWtTGwog6N04OD0
+
+{
+  "name": " Abd Alamin",
+  "photo": "http://random.com",
+  "vaccines": "",
+  "password": ""
+}
+
+###
+DELETE http://localhost:8000/api/v1/users/64fffac6b90e61e60d4ccb02
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxNmFkYzllZDc1OTMzZTQ1NDkzMyIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoic291cmF2QGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTQ4OTQ5MTUsImV4cCI6MTY5NDkzMDkxNX0.VGGhdNI8RdqyRBigBQ5mwIgKSVHtYBNasRUP_bO7vUE
+
+
+###
+PATCH http://localhost:8000/api/v1/change_admin/650016adc9ed75933e454933
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTUzOTgxNzIsImV4cCI6MTY5NTQzNDE3Mn0.fUS0WO0QM6DR77rU6ZZlfC2Pho_5LTT1Zk0284ilUXo
 
