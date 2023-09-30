@@ -15,15 +15,17 @@ const { requestValidator } = require('../middleware/requestValidator');
 router
   .get('/api/v1/availability', appointmentController.availability);
 
+// verify user email while registration
 router
-  .get('/api/v1/verify/:token', authController.verifyUserToken);
+  .get('/api/v1/verify/:token', authValidator.verifyTokenRequestValidator, requestValidator, authController.verifyUserToken);
 
 // Auth routes
 router
   .post('/api/v1/auth/register', authValidator.registerRequestValidator, requestValidator, authController.register)
-// .post('/api/v1/auth/login', authController.login);
-// will do in next version
-// .post('/api/v1/auth/reset-password', authController.resetPassword);
+  .post('/api/v1/auth/login', authValidator.loginRequestValidator, requestValidator, authController.login)
+  .post('/api/v1/auth/refresh', authValidator.refreshRequestValidator, requestValidator, authController.refresh)
+  .delete('/api/v1/auth/logout', authValidator.logoutRequestValidator, requestValidator, authController.logout)
+
 
 // router
 //   .route('/api/v1/appointments')

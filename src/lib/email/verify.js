@@ -1,3 +1,4 @@
+require('dotenv').config();
 const nodemailer = require("nodemailer");
 const createHttpError = require("http-errors");
 
@@ -9,8 +10,8 @@ const mailTransporter = (_req, _res, next) => {
       // host: 'makalamengineeringconstruction.com',
       service: 'gmail',
       auth: {
-        user: 'prosourav49@gmail.com',
-        pass: 'cdlyrpkfhllfzmep'
+        user: process.env.TRANSPORT_OWNER,
+        pass: process.env.TRANSPORT_OWNER_SECRET
       }
     });
     return transporter;
@@ -25,7 +26,7 @@ const mailTransporter = (_req, _res, next) => {
 
 
 // Send Email with OTP for verify email
-const sendEmailForEmailVerify = async (email, username, userId, token) => {
+const sendEmailForRegistrationTokenVerify = async (email, username, userId, token) => {
   try {
     if (!email || !username || !userId || !token) throw createHttpError.BadRequest('Bad Request!')
     const transporter = mailTransporter();
@@ -35,7 +36,7 @@ const sendEmailForEmailVerify = async (email, username, userId, token) => {
       subject: 'Complete Registration',
       html: `<strong>Dear ${username},</strong><br><p>You have requested to reset your password for your account with Wallet.  
             Please use the following One-Time Link to reset your password: </br> </br>
-            <a href='http://localhost:8000/api/v1/verify/${token}'>
+            <a href='${process.env.CLIENT_APPLICATION_URL}/${token}'>
                 Click Me to Verify Your Self
             </a>    
             </p>
@@ -52,6 +53,6 @@ const sendEmailForEmailVerify = async (email, username, userId, token) => {
 }
 
 module.exports = {
-  sendEmailForEmailVerify,
+  sendEmailForRegistrationTokenVerify,
   // mailTransporter
 }

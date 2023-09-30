@@ -5,17 +5,17 @@ const RefreshToken = require('../../../../model/RefreshToken');
 const { generateToken } = require('../../../../lib/token');
 const createHttpError = require('http-errors');
 
-const login = async (req, res, next) => {
-  const { email, password } = req.body;
+const refresh = async (req, res, next) => {
+  const { id, token } = req.body;
   // console.log({ name, email, password });
 
   try {
-    const user = await authService.login({ email, password, issuedIp: req.clientIp });
+    const data = await authService.refresh({ id, token, issuedIp: req.clientIp });
 
     // response
     const response = {
       message: 'Signup successful',
-      data: user,
+      data: data,
       links: {
         self: req.url,
         appointments: '/api/v1/appointments',
@@ -28,4 +28,4 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = login;
+module.exports = refresh;

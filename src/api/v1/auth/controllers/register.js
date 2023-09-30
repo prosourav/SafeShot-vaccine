@@ -1,9 +1,10 @@
 require('dotenv').config();
-const { addDays } = require('date-fns');
+const createHttpError = require('http-errors');
+// const { addDays } = require('date-fns');
 const authService = require('../../../../lib/auth/index');
-const RefreshToken = require('../../../../model/RefreshToken');
+// const RefreshToken = require('../../../../model/RefreshToken');
 const { generateToken } = require('../../../../lib/token');
-const { sendEmailForEmailVerify } = require('../../../../lib/email/verify');
+// const { sendEmailForEmailVerify } = require('../../../../lib/email/verify');
 
 const register = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -12,23 +13,16 @@ const register = async (req, res, next) => {
   try {
 
     // generate access token
-    const payloadAccess = {
-      name: name,
-      email: email,
-    };
+    const payloadAccess = { name, email };
 
-    const accessTokenGen = generateToken({
-      payload: payloadAccess, secret: process.env.ACCESS_TOKEN_SECRET,
-      expiresIn: '10m'
-    });
+    const accessTokenGen = generateToken({ payload: payloadAccess, secret: process.env.ACCESS_TOKEN_SECRET, expiresIn: '10m' });
 
-    const user = await authService.register({ name, email, password, token: accessTokenGen });
-    const resp = await sendEmailForEmailVerify(user.email, user.name, user.id, accessTokenGen);
-
+    await authService.register({ name, email, password, token: accessTokenGen });
+  
     // response
     const response = {
       message: 'Please check your mail inbox to complete the verification',
-      data: `Email sent: ${resp}`,
+      data: `Verification Email sent`,
       links: {
         self: req.url,
         login: '/auth/login',

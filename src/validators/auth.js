@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, query, param } = require("express-validator");
 
 
 // Sign Request Body Validator
@@ -13,7 +13,7 @@ const registerRequestValidator = [
 
   body('email')
     .toLowerCase()
-    .isEmail().withMessage('Email must be an valid email'),
+    .isEmail().withMessage('Email must be an valid'),
 
 
   body('password')
@@ -25,9 +25,50 @@ const registerRequestValidator = [
     .withMessage('Password must be strong')
 ];
 
+const verifyTokenRequestValidator = [
+  param('token')
+    .notEmpty()
+    .isString().withMessage('Invalid token')
+    .escape(),
+];
+
+const loginRequestValidator = [
+
+  body('email')
+    .toLowerCase()
+    .isEmail().withMessage('Email must be an valid'),
+
+
+  body('password')
+    .trim()
+    .isLength({ min: 6, max: 12 })
+    .withMessage('Password must be between 5-12 charecters')
+    .bail()
+    .isStrongPassword()
+    .withMessage('Password must be strong')
+];
+
+const refreshRequestValidator = [
+  body('id')
+    .notEmpty()
+    .isString().withMessage('Invalid user'),
+
+  body('token')
+    .notEmpty()
+    .isString().withMessage('Invalid token'),
+];
+
+const logoutRequestValidator = [
+  query('id')
+    .notEmpty()
+    .isString().withMessage('Invalid user, Id should be int')
+    .escape(),
+];
+
 module.exports = {
-  // verifyEmailRequest,
   registerRequestValidator,
-  // loginRequestValidator,
-  // resetRequestValidator
+  loginRequestValidator,
+  refreshRequestValidator,
+  logoutRequestValidator,
+  verifyTokenRequestValidator
 }

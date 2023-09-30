@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "name": "Pritam",
-  "email":"cirdizuste@gufum.com",
+  "email":"ramluhesta@gufum.com",
   "password":"PassWord@123"
 }
 
@@ -15,9 +15,23 @@ POST http://localhost:8000/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email":"admin@example.com",
-  "password":"PassWord123"
+  "email":"ramluhesta@gufum.com",
+  "password":"PassWord@123"
 }
+
+###
+POST http://localhost:8000/api/v1/auth/refresh
+Content-Type: application/json
+
+{
+  "id":"6517def60b0291fb1ab56412",
+  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MTdlMDdmZWU1MGZhZmJkZjYyNzViOCIsInVzZXIiOiI2NTE3ZGVmNjBiMDI5MWZiMWFiNTY0MTIiLCJuYW1lIjoiUHJpdGFtIiwiZW1haWwiOiJyYW1sdWhlc3RhQGd1ZnVtLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk2MDYzNjE1LCJleHAiOjE2OTg2NTU2MTV9.zY_BcUvvStewMw-UmfsM0m-w9zW5EFLiAgzzHbFm90M"
+}
+
+###
+DELETE  http://localhost:8000/api/v1/auth/logout?id=6517def60b0291fb1ab56412
+Content-Type: application/json
+
 
 ###
 POST  http://localhost:8000/api/v1/appointments
