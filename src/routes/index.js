@@ -3,11 +3,11 @@ const { authValidator, } = require('../validators');
 const { controllers: authController } = require('../api/v1/auth');
 const { controllers: appointmentController } = require('../api/v1/appointment');
 const { requestValidator } = require('../middleware/requestValidator');
+const authorize = require('../middleware/authorize');
 // const { controllers: userController } = require('../api/v1/user');
 // const { controllers: reviewController } = require('../api/v1/review');
 // const authenticate = require('../middleware/authenticate');
 // const setFilterByRole = require('../middleware/setFilterByRole');
-// const authorize = require('../middleware/authorize');
 // const ownership = require('../middleware/ownerShip');
 // const haspPermission = require('../middleware/hasPermission');
 
@@ -27,10 +27,10 @@ router
   .delete('/api/v1/auth/logout', authValidator.logoutRequestValidator, requestValidator, authController.logout)
 
 
-// router
-//   .route('/api/v1/appointments')
-//   .get(authenticate, authorize(['user', 'admin', 'doctor']), setFilterByRole, appointmentController.findAllItem)
-//   .post(authenticate, authorize(['user', 'admin']), appointmentController.create)
+router
+  .route('/api/v1/appointments')
+  .get(authenticate, authorize, setFilterByRole, appointmentController.findAllItem)
+  .post(authenticate, authorize, appointmentController.create)
 
 // router
 //   .route('/api/v1/appointments/:id')
