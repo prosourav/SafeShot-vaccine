@@ -5,18 +5,31 @@ const { body, query, param } = require("express-validator");
 const registerRequestValidator = [
   body('name')
     .trim()
-    .isAlphanumeric()
+    .not()
+    .isEmpty()
+    .withMessage('User name is required')
+    .bail()
+    .matches(/^[A-Za-z]+ [A-Za-z]+$/)
     .withMessage('Username must be a valid text format')
+    .bail()
+    .matches(/\s+/)
+    .withMessage('User name must have one space between first and last name')
     .bail()
     .isLength({ min: 4, max: 18 })
     .withMessage('Username must be between 4-10 charecters'),
 
   body('email')
+    .notEmpty()
+    .withMessage('Password is required')
+    .bail()
     .toLowerCase()
-    .isEmail().withMessage('Email must be an valid'),
+    .isEmail().withMessage('Invalid email'),
 
 
   body('password')
+    .notEmpty()
+    .withMessage('Password is required')
+    .bail()
     .trim()
     .isLength({ min: 6, max: 12 })
     .withMessage('Password must be between 5-12 charecters')

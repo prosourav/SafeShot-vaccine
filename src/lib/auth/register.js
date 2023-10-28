@@ -1,7 +1,7 @@
 const { itemExist, createUser } = require('../user');
 const { generateHash } = require('../../utils/hashing');
 const createHttpError = require('http-errors');
-const { sendEmailForRegistrationTokenVerify } = require('../email/verify');
+const { sendEmailForRegistrationTokenVerify } = require('../email');
 
 const register = async ({ name, email, password, token }) => {
   const hasUser = await itemExist(email);

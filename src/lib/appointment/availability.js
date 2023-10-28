@@ -11,7 +11,7 @@ const availability = async () => {
     dates.push(format(date, "yyyy-MM-dd"));
   };
 
-  // getting all appointment's of this week
+  // getting all appointments of this week
   const data = await Appointment.find({
     date: {
       $gte: dates[0],
@@ -33,7 +33,7 @@ const availability = async () => {
 
   //creating final available dates  
   Object.keys(dateObj).forEach(item => {
-    if (dateObj[item].length > 2) {
+    if (dateObj[item].length > 3) {
       dates = dates.filter(date => date !== item);
     }
   });

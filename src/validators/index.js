@@ -1,19 +1,13 @@
 const authValidator = require("./auth.js");
-// import PermissionRequest from "./permissionRequest.js"
-// import CategoryRequest from "./categoryRequest.js"
-// import RoleRequest from "./roleRequest.js"
-// import QueryRequest from "./queryRequest.js"
-// import UserRequest from "./userRequest.js"
-// import AccountRequest from "./accountRequest.js"
-// import ExpanseRequest from "./expanseRequest.js"
+const appointmentValidator = require("./appointment.js");
+const vaccinevalidator = require("./vaccine"); 
+const userValidator = require("./user.js");
+const reviewValidator = require("./review.js");
 
 module.exports = {
   authValidator,
-  // PermissionRequest,
-  // CategoryRequest,
-  // RoleRequest,
-  // QueryRequest,
-  // UserRequest,
-  // AccountRequest,
-  // ExpanseRequest
-}
+  appointmentValidator,
+  vaccinevalidator,
+  userValidator,
+  reviewValidator
+};

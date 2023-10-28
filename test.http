@@ -1,3 +1,4 @@
+# check all the available dates for the appointments
 GET http://localhost:8000/api/v1/availability
 
 ###
@@ -5,9 +6,9 @@ POST http://localhost:8000/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "name": "Pritam",
-  "email":"ramluhesta@gufum.com",
-  "password":"PassWord@123"
+  "name": "Prosourav One",
+  "email":"prosourav49@gmail.com",
+  "password":"Test@123"
 }
 
 ###
@@ -15,8 +16,8 @@ POST http://localhost:8000/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email":"ramluhesta@gufum.com",
-  "password":"PassWord@123"
+  "email":"souravsaha113@yahoo.com",
+  "password":"Test@123"
 }
 
 ###
@@ -24,56 +25,79 @@ POST http://localhost:8000/api/v1/auth/refresh
 Content-Type: application/json
 
 {
-  "id":"6517def60b0291fb1ab56412",
-  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MTdlMDdmZWU1MGZhZmJkZjYyNzViOCIsInVzZXIiOiI2NTE3ZGVmNjBiMDI5MWZiMWFiNTY0MTIiLCJuYW1lIjoiUHJpdGFtIiwiZW1haWwiOiJyYW1sdWhlc3RhQGd1ZnVtLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk2MDYzNjE1LCJleHAiOjE2OTg2NTU2MTV9.zY_BcUvvStewMw-UmfsM0m-w9zW5EFLiAgzzHbFm90M"
+  "id":"6524fe9dea75f922eba95436",
+  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjRmZjI1ZWE3NWY5MjJlYmE5NTQzZCIsInVzZXIiOiI2NTI0ZmU5ZGVhNzVmOTIyZWJhOTU0MzYiLCJuYW1lIjoiVGVzdHVzZXIiLCJlbWFpbCI6InBvbWFpa2FpMzUxQHJhcGlkbHl3cy5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY5NjkyMzQyOSwiZXhwIjoxNjk5NTE1NDI5fQ.naneEtvp76IjSFn5wBG9pel879CvNyc3gzU_zEwkVqQ"
 }
 
 ###
-DELETE  http://localhost:8000/api/v1/auth/logout?id=6517def60b0291fb1ab56412
+POST  http://localhost:8000/api/v1/auth/logout?id=6524fe9dea75f922eba95436
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjgyMTQyZTY1MjY3ZTg2M2RlY2QxMSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk3NjUwNjY0LCJleHAiOjE2OTc2NTI0NjR9.29_8OXSb7pBS6a_GZGAP-gXYZB1XUii1MJkHpERG-Mw
 
-
+###
+GET  http://localhost:8000/api/v1/users/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjgyMTQyZTY1MjY3ZTg2M2RlY2QxMSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk3NjUyNTE1LCJleHAiOjE2OTc2NTQzMTV9.W39I9q-RoykbnUe_fZGJ1tNOPdURM_Nm8KumVjvpNLk
 ###
 POST  http://localhost:8000/api/v1/appointments
-
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ4ODYyNjYsImV4cCI6MTY5NDkyMjI2Nn0.7AJSwUUz6-vKH6-_acug4wwMhuim9c0pQH84HCWoutA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkNDEwOTBkMzljNDlkZWY1Nzk2YiIsIm5hbWUiOiJQcm9zb3VyYXYiLCJlbWFpbCI6InByb3NvdXJhdjQ5QGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk4MzgyNDcyLCJleHAiOjE2OTgzODQyNzJ9.Cq6L7CXEm0vmtM-KDIYCR90nNrqZVzPASsM5KBtuvmo
 
 {
-  "vaccine": "Viral",
-  "date": "2023-09-11"
+  "vaccine": "Covid",
+  "date": "2023-10-29"
 }
 
 ###
-GET  http://localhost:8000/api/v1/appointments?page=1&limit=2&sort_by=createdAt&sort_type=dsc
-Content-Type: application/application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ4ODYyNjYsImV4cCI6MTY5NDkyMjI2Nn0.7AJSwUUz6-vKH6-_acug4wwMhuim9c0pQH84HCWoutA
+PATCH   http://localhost:8000/api/v1/appointments/6537ef4976f339dd8e4cbbfe
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODE2NjgzMiwiZXhwIjoxNjk4MTY4NjMyfQ.N9iqGUzWZZ68P5kHJPjvkuPyQ6cMvMy4aLhcVSXWFYA
+
+{
+  "date": "2023-10-24"
+}
+###
+GET  http://localhost:8000/api/v1/appointments?page=1&limit=3&sort_by=createdAt&sort_type=dsc&search=&status=complete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2QwMWE5YjBmNTMzOGRiZDM1YjA2ZCIsIm5hbWUiOiJVc2VyIE9uZSIsImVtYWlsIjoic291cmF2c2FoYTExM0B5YWhvby5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY5ODQ5ODQ4OCwiZXhwIjoxNjk4NTAwMjg4fQ.gn5jcoPWRdFYT66SkNJpiOKjozROrVvsy6bYYJjt3Pw
 
 
 ###
-GET  http://localhost:8000/api/v1/appointments/6501343662c8cd16c4d5fe4d?expand=user
+PATCH  http://localhost:8000/api/v1/appointments/complete/6533d66d90d39c49def57985
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ4ODYyNjYsImV4cCI6MTY5NDkyMjI2Nn0.7AJSwUUz6-vKH6-_acug4wwMhuim9c0pQH84HCWoutA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODE2NjgzMiwiZXhwIjoxNjk4MTY4NjMyfQ.N9iqGUzWZZ68P5kHJPjvkuPyQ6cMvMy4aLhcVSXWFYA
 
 ###
-GET  http://localhost:8000/api/v1/reviews?page=1&limit=2&sort_by=createdAt&sort_type=dsc&filter=approved&expand=user,appointment
+GET  http://localhost:8000/api/v1/appointments/6533d6dd90d39c49def57991?expand=user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxNmFkYzllZDc1OTMzZTQ1NDkzMyIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoic291cmF2QGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTQ5NTI0NDEsImV4cCI6MTY5NDk4ODQ0MX0.mUNz2LPv8PhKzR3t_Uyf9iiK7QHhS4YKQT-_9CqzvU8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkNDZkOTBkMzljNDlkZWY1Nzk3MSIsIm5hbWUiOiJTb3VyYXYiLCJlbWFpbCI6InNvdXJhdnNhaGExMTNAeWFob28uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTc5ODEwMzQsImV4cCI6MTY5Nzk4MjgzNH0.iof0b6j1fQOhdZxItjhP2CnCW7qBwMGer97GnEdxV0o
 
+###
+DELETE http://localhost:8000/api/v1/appointments/6533d66d90d39c49def57985
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODE2Mzg4NCwiZXhwIjoxNjk4MTY1Njg0fQ.1o2AsbmrMpmjKRbt7BqsswXI-tUO2bZ-AOR2M8GJm7I
+
+
+###
+GET  http://localhost:8000/api/v1/reviews?page=1&limit=2&sort_by=createdAt&sort_type=dsc&search=pro&filter=approved&expand=user,appointment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkNDZkOTBkMzljNDlkZWY1Nzk3MSIsIm5hbWUiOiJTb3VyYXYiLCJlbWFpbCI6InNvdXJhdnNhaGExMTNAeWFob28uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTgyOTY3NzUsImV4cCI6MTY5ODI5ODU3NX0.xY7-zwOhk61tvXroSUeHZWD1C1UpBsh54wdaBNCPDx8
+
+# to be continued
 ###
 POST http://localhost:8000/api/v1/reviews
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmZmYWM2YjkwZTYxZTYwZDRjY2IwMiIsIm5hbWUiOiIgQWJkIEFsYW1pbiIsImVtYWlsIjoiYWxhbWluQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTQ5MDQ1MjAsImV4cCI6MTY5NDk0MDUyMH0.EFhiP0MNNaEqyZtV_S0Zd6q2wVcav2IiUnCE39o5NMA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkNDEwOTBkMzljNDlkZWY1Nzk2YiIsIm5hbWUiOiJQcm9zb3VyYXYiLCJlbWFpbCI6InByb3NvdXJhdjQ5QGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk4Mzg1MDg2LCJleHAiOjE2OTgzODY4ODZ9.cdtVQ7iIgFVSXZCcKBc28_2ERxzor52nhfHOokhFgIQ
 
 {
   "body": "1st comment of alamin viaya",
-  "appointmentId": "65004153e7c4ce7ec1a53f82"
+  "appointmentId": "653b42aa92743e903590d113"
 }
 
 ###
-PATCH http://localhost:8000/api/v1/reviews/65061eaeca451acd61f0fc1f
+PATCH http://localhost:8000/api/v1/reviews/65395f25dc447c01ce04fc85
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ5MDM3NTIsImV4cCI6MTY5NDkzOTc1Mn0.n3Jhoj6vXwId5x2Lc0JR0r2xA5dEhUqb6BGW-4QKNA4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkNDZkOTBkMzljNDlkZWY1Nzk3MSIsIm5hbWUiOiJTb3VyYXYiLCJlbWFpbCI6InNvdXJhdnNhaGExMTNAeWFob28uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTgyOTc5NDcsImV4cCI6MTY5ODI5OTc0N30.b45_9cDdRr0ugSn7zv3uAgQc-TcAZxl8GR2o4R8fmM4
 
 {
   "body": "3nd comment",
@@ -81,41 +105,39 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwY
 }
 
 ###
-DELETE  http://localhost:8000/api/v1/reviews/650631782a7e67c6f38d4138
+DELETE  http://localhost:8000/api/v1/reviews/65395f25dc447c01ce04fc85
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmZmYWM2YjkwZTYxZTYwZDRjY2IwMiIsIm5hbWUiOiIgQWJkIEFsYW1pbiIsImVtYWlsIjoiYWxhbWluQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTQ5MDQ1MjAsImV4cCI6MTY5NDk0MDUyMH0.EFhiP0MNNaEqyZtV_S0Zd6q2wVcav2IiUnCE39o5NMA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkNDZkOTBkMzljNDlkZWY1Nzk3MSIsIm5hbWUiOiJTb3VyYXYiLCJlbWFpbCI6InNvdXJhdnNhaGExMTNAeWFob28uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTgyOTc5NDcsImV4cCI6MTY5ODI5OTc0N30.b45_9cDdRr0ugSn7zv3uAgQc-TcAZxl8GR2o4R8fmM4
 
 ###
-GET http://localhost:8000/api/v1/users?page=1&limit=1&sort_by=createdAt&sort_type=dsc&search=j
+GET http://localhost:8000/api/v1/users?page=1&limit=10&sort_by=name&sort_type=asc&search=sou&filter=approved
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ5NjMwNzUsImV4cCI6MTY5NDk5OTA3NX0.Q_c2CrmqvZqGkSyugWrebqJ0wdrJYnQCwJ3akmFYQA8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODM0MTg4NiwiZXhwIjoxNjk4MzQzNjg2fQ.7DioiUv7LxJnTSU8iJYNZKAxwEIv0IxUbHLmLveQfmM
 
 ###
 POST  http://localhost:8000/api/v1/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ5NjMwNzUsImV4cCI6MTY5NDk5OTA3NX0.Q_c2CrmqvZqGkSyugWrebqJ0wdrJYnQCwJ3akmFYQA8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODM0MTg4NiwiZXhwIjoxNjk4MzQzNjg2fQ.7DioiUv7LxJnTSU8iJYNZKAxwEIv0IxUbHLmLveQfmM
 
 {
   "name": "newUser4",
-  "email":"newUser4@example.com",
+  "email":"sourav@codeclouds.com",
   "password":"PassWord123"
 }
 
 ###
-GET http://localhost:8000/api/v1/users/64fffac6b90e61e60d4ccb02
+GET http://localhost:8000/api/v1/users/6533d46d90d39c49def57971
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxNmFkYzllZDc1OTMzZTQ1NDkzMyIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoic291cmF2QGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTQ4OTY3NDcsImV4cCI6MTY5NDkzMjc0N30.wkCXozmvNJXb5pTz5VQE42WvcYwsTt5WtqW-TUacJo8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODM0Mzk0MywiZXhwIjoxNjk4MzQ1NzQzfQ.-zHdswF9y7wz98Ta_-YeqbXFRHgPThZMl4fvUfquW8k
 
 ###
-PATCH http://localhost:8000/api/v1/users/64fffac6b90e61e60d4ccb02
+PATCH  http://localhost:8000/api/v1/users/6533d46d90d39c49def57971
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTQ4NjU0MzUsImV4cCI6MTY5NDkwMTQzNX0.HqmCnZgNcKPXNyrkLEOmN6LkM0W1cWtTGwog6N04OD0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODM0Mzk0MywiZXhwIjoxNjk4MzQ1NzQzfQ.-zHdswF9y7wz98Ta_-YeqbXFRHgPThZMl4fvUfquW8k
 
 {
-  "name": " Abd Alamin",
-  "photo": "http://random.com",
-  "vaccines": "",
-  "password": ""
+  "name": "Alamin",
+  "photo": "http://random.com"
 }
 
 ###
@@ -129,3 +151,19 @@ PATCH http://localhost:8000/api/v1/change_admin/650016adc9ed75933e454933
 Content-Type: application/json
 Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEwYzllZDc1OTMzZTQ1NDk0MiIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTUzOTgxNzIsImV4cCI6MTY5NTQzNDE3Mn0.fUS0WO0QM6DR77rU6ZZlfC2Pho_5LTT1Zk0284ilUXo
 
+
+###
+POST http://localhost:8000/api/v1/vaccines
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjUxMDU1MDQ4NDI2ODkwYWM2NTRiZCIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoic291cmF2c2FoYTExM0B5YWhvby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTY5MzgzMjQsImV4cCI6MTY5Njk0MDEyNH0.5Z5Js4m7VvZJGJsPM3vU1u9bB2C2hQlgmV-S07ZDJL4
+
+{
+  "name":"Covid"
+}
+
+###
+
+### v3
+1. Make user able to signup later
+2. Forgot password
+3. Review Filter

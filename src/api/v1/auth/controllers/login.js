@@ -14,7 +14,7 @@ const login = async (req, res, next) => {
 
     // response
     const response = {
-      message: 'Signup successful',
+      message: 'Signin successful',
       data: user,
       links: {
         self: req.url,

@@ -21,11 +21,10 @@ const register = async (req, res, next) => {
   
     // response
     const response = {
-      message: 'Please check your mail inbox to complete the verification',
-      data: `Verification Email sent`,
+      message: 'Please check your inbox to complete the verification',
       links: {
         self: req.url,
-        login: '/auth/login',
+        login: 'api/v1/auth/login',
       },
     };
     res.status(201).json(response);

@@ -4,15 +4,14 @@ const availability = async (_req, res, next) => {
 
   try {
 
-    let availableDates = await appointmentService.availability();
+    const availableDates = await appointmentService.availability();
 
     const response = {
-      code: 200,
-      message: 'Available Dates Fetched Successfully',
+      message: 'Available dates fetched successfully',
       data: availableDates,
       links: {
-        self: `/availability`,
-        login: `/login`
+        self: `api/v1/availability`,
+        login: `api/v1/auth/login`
       },
     };
 

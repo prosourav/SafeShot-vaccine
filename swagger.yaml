@@ -17,6 +17,8 @@ servers:
     url: 
       https://virtserver.swaggerhub.com/Learning-SwaggerAPI/Vaccination-API/1.0.0
 tags:
+  - name: Availability
+    description: Available Dates Endpoints
   - name: Auth
     description: Authentication Endpoints
   - name: Appointments
@@ -43,22 +45,22 @@ paths:
               properties:
                 name:
                   type: string
-                  example: Abdullah Alamin
+                  example: Fname Lname
                 email:
                   type: string
                   format: email
-                  example: alamin@example.com
+                  example: user@example.com
                 password:
                   type: string
                   format: password
-                  example: PassWord123
+                  example: PassWord111#
               required:
                 - name
                 - email
                 - password
       responses:
         '201':
-          description: Signup successul
+          description: A verification email sent to you inbox 
           content:
             application/json:
               schema:
@@ -70,27 +72,22 @@ paths:
                   #   example: 201
                   message:
                     type: string
-                    example: Signup successful
-                  data:
-                    type: object
-                    properties:
-                      access_token:
-                        type: string
-                        example: >-
-                          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                    example: Please check your mail inbox to complete the verification
                   links:
                     type: object
                     properties:
                       self:
                         type: string
-                        example: /auth/signup
+                        example: api/v1/auth/register
                       signin:
                         type: string
-                        example: /auth/signin
+                        example: api/v1/auth/login
         '400':
           $ref: '#/components/responses/400'
         '500':
           $ref: '#/components/responses/500'
+        '409':
+          $ref: '#/components/responses/409'  
   '/auth/login':
     post:
       description: Login to your account
@@ -105,11 +102,11 @@ paths:
                 email:
                   type: string
                   format: email
-                  example: alamin@example.com
+                  example: user@example.com
                 password:
                   type: string
                   format: password
-                  example: PassWord123
+                  example: PassWord111#
               required:
                 - email
                 - password
@@ -121,75 +118,118 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 200
                   message:
                     type: string
                     example: Signin successful
                   data:
                     type: object
                     properties:
-                      access_token:
+                      id: 
                         type: string
-                        example: >-
-                          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                        example: 653c9da6e14c7b707ff456ed
+                      name: 
+                        type: string
+                        example: Fname Lname
+                      role: 
+                        type: string
+                        example: user
+                      email: 
+                        type: string
+                        example: user@example.com   
+                      token:
+                        type: object
+                        properties:
+                            access_token:
+                             type: string
+                             example: >-
+                               eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                            refresh_token:
+                             type: string
+                             example: >-
+                               eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c   
                   links:
                     type: object
                     properties:
                       self:
                         type: string
-                        example: /auth/signin
+                        example: /api/v1/auth/login
+                      appoinments:
+                        example: /api/v1/appointments 
         '400':
           $ref: '#/components/responses/400'
+        '401':  
+           description: Invalid credentials
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid credentials
+        '404':  
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  '/auth/forgot-password':
+  '/api/v1/verify/{token}':
     post:
-      description: Forgot account password
+      description: Verify email address
       tags:
         - Auth
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  format: email
-                  example: tester@test.com
-              required:
-                - email
+      parameters:
+        - $ref: '#/components/parameters/tokenParam'
       responses:
         '200':
-          description: Please check your email to reset the password
+          description: Successful
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 200
                   message:
                     type: string
-                    example: Please check your email inbox
-                  links:
-                    type: object
-                    properties:
-                      self:
-                        type: string
-                        example: /auth/forgot-password
-                      login:
-                        type: string
-                        example: /auth/login
+                    example: Email verification successful
+        '400':
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Resource not found
+        '404':  
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/auth/logout':
+    post:
+      operationId: Logout
+      security:
+        - bearerAuth: []
+      tags:
+        - Auth
+      description: Logout user
+      parameters:
+          - in: query
+            name: id
+            description: logout by user id
+            schema:
+               type: string
+               example: 6524fe9dea75f922eba95436
+      responses:
+        '204':
+          description: 'Logout successful'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+            $ref: '#/components/responses/500'         
+
   '/availability':
     get:
       tags:
-        - Appointments
+        - Availability
       description: Retrive all available appointment dates
       responses:
         '200':
@@ -212,6 +252,21 @@ paths:
                     example: 
                            - '2023-09-23'
                            - '2023-09-24'
+                           - '2023-09-25'
+                           - '2023-09-26'
+                           - '2023-09-27'
+                           - '2023-09-28'
+                           - '2023-09-29'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: api/v1/availability
+                      login:
+                        type: string
+                        example: api/v1/auth/login        
+                           
         '500':
           $ref: '#/components/responses/500'
   '/appointments':
@@ -228,6 +283,7 @@ paths:
         - $ref: "#/components/parameters/sortTypeParam"
         - $ref: "#/components/parameters/sortByParam"
         - $ref: "#/components/parameters/searchParam"
+        - $ref: "#/components/parameters/statusParam"
       responses:
         '200':
           description: Return a list of appointments
@@ -278,6 +334,8 @@ paths:
                             - author
                             - appointeme-time
                         - $ref: '#/components/schemas/Timestamp'
+                  pagination: 
+                      $ref: "#/components/schemas/Pagination" 
                   links:
                     type: object
                     properties:
@@ -289,6 +347,8 @@ paths:
                         example: /reviews
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
     post:
@@ -321,13 +381,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 201
                   message:
                     type: string
-                    example: Booking Successful
+                    example: Appointment Created Successfully
                   data:
                     type: object
                     properties:
@@ -348,10 +404,10 @@ paths:
                     properties:
                       self:
                         type: string
-                        example: /appoinments
+                        example: /api/v1/appoinments
                       reviews:
                         type: string
-                        example: /reviews/viral-shot
+                        example: /api/v1/reviews/viral-shot
         '400':
           $ref: '#/components/responses/400'
         '500':
@@ -1316,10 +1372,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 200
                   message:
                     type: string
                     example: Admin updated successfully
@@ -1333,7 +1385,6 @@ paths:
                         type: string
                         format: email
                         example: john@abc.com
-
                       role: 
                           type: string
                           enum: [Admin,Docter,Paitent]
@@ -1360,7 +1411,7 @@ paths:
                         type: string
                         example: /vaccines
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/responses/400' 
         '401':
           $ref: '#/components/responses/401' 
         '500':
@@ -1431,10 +1482,6 @@ components:
     AppointmentUpdateDTO:
       type: object
       properties:
-        # code:
-        #   type: integer
-        #   format: int32
-        #   example: 200
         message:
           type: string
           example: Appointment updated successfully
@@ -1547,14 +1594,10 @@ components:
           schema:
             type: object
             properties:
-              # code:
-              #   type: integer
-              #   format: int32
-              #   example: 400
-              error:
+              message:
                 type: string
                 example: Bad Request
-              data:
+              errors:
                 type: array
                 items:
                   type: object
@@ -1565,12 +1608,6 @@ components:
                     message:
                       type: string
                       example: Invalid email
-                    in:
-                      type: string
-                      enum:
-                        - query
-                        - body
-                      example: body
     '401':
       description: Unauthorized
       content:
@@ -1578,16 +1615,9 @@ components:
           schema:
             type: object
             properties:
-              # code:
-              #   type: integer
-              #   format: int32
-              #   example: 401
-              error:
-                type: string
-                example: Unauthorized
               message:
                 type: string
-                example: You don't have the right permissions
+                example: Unauthorized
     '404':
       description: Resource Not Found
       content:
@@ -1595,13 +1625,6 @@ components:
           schema:
             type: object
             properties:
-              # code:
-              #   type: integer
-              #   format: int32
-              #   example: 404
-              error:
-                type: string
-                example: Not Found
               message:
                 type: string
                 example: Requested resource not found
@@ -1612,16 +1635,19 @@ components:
           schema:
             type: object
             properties:
-              # code:
-              #   type: integer
-              #   format: int32
-              #   example: 500
-              error:
-                type: string
-                example: Internal Server Error
               message:
                 type: string
-                example: We are sorry for the inconvenience. Please try again later
+                example: Internal Server Error
+    '409':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: User already exists           
   parameters:
     pageParam:
       in: query
@@ -1663,6 +1689,16 @@ components:
       schema:
         type: string
         example: sourav
+    statusParam:
+      in: query
+      name: status
+      description: Filter status
+      schema:
+        type: string
+        enum:
+          - complete
+          - approved
+        example: approved     
     idQueryParam:
       in: query
       name: appointment
@@ -1678,3 +1714,11 @@ components:
       schema:
         type: string
         example: 1
+    tokenParam:
+      in: path
+      name: token
+      required: true
+      description: token
+      schema:
+        type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c  

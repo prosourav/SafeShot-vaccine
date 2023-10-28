@@ -25,9 +25,7 @@ const userSchema = new Schema(
       enum: ['approved', 'blocked', 'pending'],
       default: 'pending',
     },
-    vaccines: {
-      type: [Schema.ObjectId],
-    },
+    vaccines: [{ type: Schema.ObjectId, ref: 'Vaccine' }],
     token: {
       type: String,
       default: null,

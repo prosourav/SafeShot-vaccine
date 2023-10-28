@@ -1,11 +1,13 @@
 
 const createHttpError = require('http-errors');
-const permissions = require('../../config/permissions');
-module.exports = function (req, _res, next) {
-  const { method, url: route, user } = req;
-  if (permissions[user.role].includes({ method, route })) {
-    next();
-  } else {
-    return next(createHttpError.Unauthorized('Access Denied: You dont have correct privilege to perform this operation'));
-  }
-}
+
+const authorize =
+  (roles = ['admin']) =>
+    (req, _res, next) => {
+      if (roles.includes(req.user.role)) {
+        return next();
+      }
+      return next(createHttpError.Forbidden());
+    };
+
+module.exports = authorize;

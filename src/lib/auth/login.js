@@ -9,12 +9,12 @@ const { addDays } = require('date-fns');
 const login = async ({ email, password, issuedIp }) => {
   const user = await findUserByEmail(email);
   if (!user) {
-    throw createHttpError.BadRequest('Invalid Credentials')
+    throw createHttpError.NotFound('Requested resource not found')
   }
 
   const matched = await hashMatched(password, user.password);
   if (!matched) {
-    throw createHttpError.BadRequest('Invalid Credentials')
+    throw createHttpError.Unauthorized('Invalid credentials')
   }
 
   const refreshToken = new RefreshToken({
@@ -41,7 +41,7 @@ const login = async ({ email, password, issuedIp }) => {
 
   const accessTokenGen = generateToken({
     payload: payloadAccess, secret: process.env.ACCESS_TOKEN_SECRET,
-    expiresIn: '10m'
+    expiresIn: '30m'
   });
   const refreshTokenGen = generateToken({
     payload: payloadRefresh, secret: process.env.REFRESH_TOKEN_SECRET,
