@@ -11,7 +11,6 @@ const findAllItems = async (req, res, next) => {
   const sortBy = req.query.sort_by || defaults.sortBy;
   const status = req.query.status || defaults.reviewFilter;
   const expands = req.query.expand ?? defaults.expand;
-  const search = req.query.search || defaults.search
   try {
     // data
     const reviews = await reviewService.findAllItem({
@@ -21,19 +20,17 @@ const findAllItems = async (req, res, next) => {
       sortBy,
       status,
       expands,
-      search
     });
+
+    console.log(reviews);
     
-    const data = getTransformedItems({
-      items: reviews,
-      path: '/reviews',
-      selection: ['_id', 'body', 'status', 'link', 'user', 'appointmentId', 'createdAt'],
-    });
-
-    // pagination
+    // const data = getTransformedItems({
+    //   items: reviews,
+    //   path: '/reviews',
+    //   selection: ['_id', 'body','status', 'link', 'user', 'appointmentId', 'createdAt', 'updatedAt'],
+    // });
+    // console.log(data);
     const totalItems = await reviewService.count({ status });
-  
-
     const pagination = getPagination({ totalItems, limit, page });
 
     // HATEOAS Links
@@ -45,18 +42,19 @@ const findAllItems = async (req, res, next) => {
       hasPrev: !!pagination.prev,
       page,
     });
-    for (let item of data) {
-      item.vaccine = item.appointmentId.vaccine;
-      item.author = item.user.name;
-      delete item.user;
-      delete item.appointmentId
-    };
+console.log()
+
+    // for (let item of data) {
+    //   item.vaccine = item.appointmentId.vaccine;
+    //   item.username = item.user.name;
+    //   item.comment = item.body;
+    //   delete item.body;
+    // };
 
 
     res.status(200).json({
-      code: 200,
       message: 'Reviews fetched successfully',
-      data,
+      reviews,
       pagination,
       links,
     });

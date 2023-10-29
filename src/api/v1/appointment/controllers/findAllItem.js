@@ -26,7 +26,7 @@ const findAllItems = async (req, res, next) => {
     const data = query.getTransformedItems({
       items: appointments,
       path: '/appointments',
-      selection: ['_id', 'name','status','email', 'vaccine', 'link', 'date', 'createdAt'],
+      selection: ['_id', 'name','status','email', 'vaccine', 'link', 'date'],
     });
 
     // pagination

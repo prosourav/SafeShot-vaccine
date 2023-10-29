@@ -2,10 +2,10 @@ const createHttpError = require("http-errors");
 const User = require("../../model/User");
 
 const updateProfile = async (id, { name, photo }) => {
-  if (!id) { throw badRequest() };
+  if (!id) { throw createHttpError.BadRequest() };
   if (!name && !photo) { throw createHttpError.BadRequest() };
   const user = await User.findById(id);
-  if (!user) { throw createHttpError.NotFound() };
+  if (!user) { throw createHttpError.NotFound("Request resource not found") };
 
   const payload = { name, photo };
 

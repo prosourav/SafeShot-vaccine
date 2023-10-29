@@ -2,7 +2,7 @@ const Review = require("../../model/Review");
 const defaults = require("../../config/defaults");
 
 const count = async ({
-  status = defaults.reviewFilter,
+  status = defaults.status,
   perMissionFilter={},
 }) => {
   let filterSearch = {};

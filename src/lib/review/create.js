@@ -11,7 +11,6 @@ const create = async ({ appointmentId, body, user, status }) => {
     error.status = 400;
     throw error;
   }
-  // console.log('*', appointmentId, body, user);
   const appointment = await appointmentService.findSingleItem({ id: appointmentId });
 
   if (!appointment) {

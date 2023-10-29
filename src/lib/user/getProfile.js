@@ -8,7 +8,6 @@ const getProfile = async ({ id }) => {
     select: 'name appointment',
     // strictPopulate: false,
   });
-  console.log('this is the user', user);
   if (!user) { throw createHttpError.NotFound(); };
   return { id: user._id, ...user._doc, };
 };

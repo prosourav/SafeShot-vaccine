@@ -4,7 +4,6 @@ const User = require("../../model/User");
 const updateItem = async ({ name, photo, vaccines, passsword, id, token = null, status }) => {
   if (!id) { throw createHttpError.BadRequest('id is required'); }
   const user = await User.findById(id);
-  console.log(`User: ${user}`);
 
   if (passsword) {
     password = await generateHash(passsword);

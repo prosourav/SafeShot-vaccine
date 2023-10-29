@@ -10,6 +10,7 @@ const updateItem = async (req, res, next) => {
     }
     const appointment = await appointmentService.updateItem(id, payload);
     delete appointment._id;
+    delete appointment.__v;
     const response = {
       code: 200,
       message: 'Appointment updated successfully',

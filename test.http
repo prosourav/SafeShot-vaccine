@@ -16,7 +16,7 @@ POST http://localhost:8000/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email":"souravsaha113@yahoo.com",
+  "email":"dev.souravsaha@gmail.com",
   "password":"Test@123"
 }
 
@@ -63,9 +63,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2QwMWE5Y
 
 
 ###
-PATCH  http://localhost:8000/api/v1/appointments/complete/6533d66d90d39c49def57985
+PATCH  http://localhost:8000/api/v1/appointments/complete/653d038f5284342d85d6a3f1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODE2NjgzMiwiZXhwIjoxNjk4MTY4NjMyfQ.N9iqGUzWZZ68P5kHJPjvkuPyQ6cMvMy4aLhcVSXWFYA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2NmODhlZWQxY2Q3NDk5Y2RlNTc5NSIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoiZGV2LnNvdXJhdnNhaGFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk4NTYyOTE5LCJleHAiOjE2OTg1NjQ3MTl9.F62y28rJPLISaaEnwp5piyQQ9HS_iqa0-92bj95GhuA
 
 ###
 GET  http://localhost:8000/api/v1/appointments/6533d6dd90d39c49def57991?expand=user
@@ -79,15 +79,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2O
 
 
 ###
-GET  http://localhost:8000/api/v1/reviews?page=1&limit=2&sort_by=createdAt&sort_type=dsc&search=pro&filter=approved&expand=user,appointment
+GET  http://localhost:8000/api/v1/reviews?page=1&limit=2&sort_by=createdAt&sort_type=dsc&status=pending&filter=&expand=user,appointment
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkNDZkOTBkMzljNDlkZWY1Nzk3MSIsIm5hbWUiOiJTb3VyYXYiLCJlbWFpbCI6InNvdXJhdnNhaGExMTNAeWFob28uY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTgyOTY3NzUsImV4cCI6MTY5ODI5ODU3NX0.xY7-zwOhk61tvXroSUeHZWD1C1UpBsh54wdaBNCPDx8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2NmODhlZWQxY2Q3NDk5Y2RlNTc5NSIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoiZGV2LnNvdXJhdnNhaGFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk4NTc2NTAzLCJleHAiOjE2OTg1NzgzMDN9.z32KitQfFiuRpHdcc0h_pzWaffrUCCTzjZdl7dN3MRc
 
 # to be continued
 ###
 POST http://localhost:8000/api/v1/reviews
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkNDEwOTBkMzljNDlkZWY1Nzk2YiIsIm5hbWUiOiJQcm9zb3VyYXYiLCJlbWFpbCI6InByb3NvdXJhdjQ5QGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk4Mzg1MDg2LCJleHAiOjE2OTgzODY4ODZ9.cdtVQ7iIgFVSXZCcKBc28_2ERxzor52nhfHOokhFgIQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2NmODhlZWQxY2Q3NDk5Y2RlNTc5NSIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoiZGV2LnNvdXJhdnNhaGFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk4NTcxMzU4LCJleHAiOjE2OTg1NzMxNTh9.w0Y8dL3QnuphAoDnrXqE9X14QBctLVLPHk9n3UBKoLU
 
 {
   "body": "1st comment of alamin viaya",
@@ -155,10 +155,10 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDAxOTEw
 ###
 POST http://localhost:8000/api/v1/vaccines
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjUxMDU1MDQ4NDI2ODkwYWM2NTRiZCIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoic291cmF2c2FoYTExM0B5YWhvby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTY5MzgzMjQsImV4cCI6MTY5Njk0MDEyNH0.5Z5Js4m7VvZJGJsPM3vU1u9bB2C2hQlgmV-S07ZDJL4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2NmODhlZWQxY2Q3NDk5Y2RlNTc5NSIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoiZGV2LnNvdXJhdnNhaGFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk4NTYyOTE5LCJleHAiOjE2OTg1NjQ3MTl9.F62y28rJPLISaaEnwp5piyQQ9HS_iqa0-92bj95GhuA
 
 {
-  "name":"Covid"
+  "name":"Pneumonia"
 }
 
 ###

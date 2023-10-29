@@ -18,19 +18,19 @@ servers:
       https://virtserver.swaggerhub.com/Learning-SwaggerAPI/Vaccination-API/1.0.0
 tags:
   - name: Availability
-    description: Available Dates Endpoints
+    description: Available Date Endpoints
   - name: Auth
     description: Authentication Endpoints
   - name: Appointments
-    description: Appointments Endpoints
+    description: Appointment Endpoint
   - name: Users
     description: User Profile Endpoints
   - name: Reviews
-    description: Description Endpoints
+    description: Review Endpoints
   - name: Admin
     description: Admin Endpoints
   - name: Doctor
-    description: Doctors Endpoints
+    description: Doctor Endpoints
 paths:
   '/auth/register':
     post:
@@ -102,11 +102,11 @@ paths:
                 email:
                   type: string
                   format: email
-                  example: user@example.com
+                  example: dev.souravsaha@gmail.com
                 password:
                   type: string
                   format: password
-                  example: PassWord111#
+                  example: Test@123
               required:
                 - email
                 - password
@@ -171,7 +171,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  '/api/v1/verify/{token}':
+  '/aputh/verify/{token}':
     post:
       description: Verify email address
       tags:
@@ -203,7 +203,89 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  '/api/v1/auth/logout':
+  '/auth/refresh':
+    post:
+      description: Get auth token
+      tags: 
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: 6524fe9dea75f922eba95436
+                refreshToken:
+                  type: string
+                  format: token
+                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjRmZjI1ZWE3NWY5MjJlYmE5NTQzZCIsInVzZXIiOiI2NTI0ZmU5ZGVhNzVmOTIyZWJhOTU0MzYiLCJuYW1lIjoiVGVzdHVzZXIiLCJlbWFpbCI6InBvbWFpa2FpMzUxQHJhcGlkbHl3cy5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY5NjkyMzQyOSwiZXhwIjoxNjk5NTE1NDI5fQ.naneEtvp76IjSFn5wBG9pel879CvNyc3gzU_zEwkVqQ
+              required:
+                - id
+                - token
+      responses:
+        '200':
+          description: Signin successul
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Signin successful
+                  data:
+                    type: object
+                    properties:
+                      id: 
+                        type: string
+                        example: 653c9da6e14c7b707ff456ed
+                      name: 
+                        type: string
+                        example: Fname Lname
+                      role: 
+                        type: string
+                        example: user
+                      email: 
+                        type: string
+                        example: user@example.com   
+                      token:
+                        type: object
+                        properties:
+                            access_token:
+                             type: string
+                             example: >-
+                               eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                            refresh_token:
+                             type: string
+                             example: >-
+                               eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c   
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /api/v1/auth/refresh
+                      appoinments:
+                        example: /api/v1/appointments 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':  
+           description: Invalid credentials
+           content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid credentials
+        '404':  
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'          
+  '/auth/logout':
     post:
       operationId: Logout
       security:
@@ -292,9 +374,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   example: 200
                   message:
                     type: string
                     example: Appoinemts fetched successfully
@@ -304,10 +383,13 @@ paths:
                       allOf:
                         - type: object
                           properties:
-                            id:
+                            _id:
                               type: integer
                               format: int32
                               example: 1
+                            name:
+                              type: string
+                              example: user
                             vacine:
                               type: string
                               enum:
@@ -325,15 +407,15 @@ paths:
                               type: string
                               format: url
                               example: /appointments/1
-                            appointeme-time:
+                            date:
                               type: string
-                              format: date-time
+                              format: date
                           required:
                             - id
                             - title
                             - author
                             - appointeme-time
-                        - $ref: '#/components/schemas/Timestamp'
+                        # - $ref: '#/components/schemas/Timestamp'
                   pagination: 
                       $ref: "#/components/schemas/Pagination" 
                   links:
@@ -341,14 +423,13 @@ paths:
                     properties:
                       self:
                         type: string
-                        example: /appointments
-                      review:
-                        type: string
-                        example: /reviews
+                        example: /api/v1/appointments
         '400':
           $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '404': 
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
     post:
@@ -398,7 +479,7 @@ paths:
                         example: viral
                       time:
                         type: string
-                        format: date-time
+                        format: date
                   links:
                     type: object
                     properties:
@@ -479,7 +560,7 @@ paths:
                   example: Pnemonia shot
                 date:
                   type: string
-                  format: date-time
+                  format: date
       responses:
         '200':
           description: Successfully Updated
@@ -508,6 +589,16 @@ paths:
           description: Appointment deleted successfully
         '401':
           $ref: '#/components/responses/401'
+        '409':  
+            description: Conflict, Appointment completed.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Completed appointment can't be deleted
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -636,10 +727,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 201
                   message:
                     type: string
                     example: User created successful
@@ -734,10 +821,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 200
                   message:
                     type: string
                     example: Profile data fetched successfully
@@ -755,16 +838,16 @@ paths:
                         type: string
                         format: url
                         example: https://s3.aws.com/myfirstblog/124.jpg
-                      vaccination:
+                      vaccines:
                         type: string
                         enum: [Covisheild,Pnemonia,Viral]
                         example: ["Covisheild", "Pnemonia"]
                       createdAt:
                         type: string
-                        format: date-time
+                        format: date
                       updatedAt:
                         type: string
-                        format: date-time
+                        format: date
                   links:
                     type: object
                     properties:
@@ -774,8 +857,8 @@ paths:
                       appointments:
                         type: string
                         example: /appoinments
-        '400':
-          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
     patch:
@@ -805,10 +888,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 200
                   message:
                     type: string
                     example: Profile data updated successfully
@@ -847,6 +926,8 @@ paths:
                         example: /appoinments
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
   '/users/{id}':
@@ -895,10 +976,10 @@ paths:
                         example: ["Covisheild", "Pnemonia"]
                       createdAt:
                         type: string
-                        format: date-time
+                        format: date
                       updatedAt:
                         type: string
-                        format: date-time
+                        format: date
                   links:
                     type: object
                     properties:
@@ -992,10 +1073,10 @@ paths:
                           example: Paitent 
                       createdAt:
                         type: string
-                        format: date-time
+                        format: date
                       updatedAt:
                         type: string
-                        format: date-time
+                        format: date
                   links:
                     type: object
                     properties:
@@ -1026,33 +1107,100 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+  '/appointments/complete/{appointmentId}':
+    patch:
+      operationId: updateUserVaccineStatus
+      security:
+        - bearerAuth: []
+      tags:
+        - Doctor  
+      parameters:
+        - $ref: '#/components/parameters/appoinmentIdPathParam'  
+      responses:
+         '200': 
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Appointment completed successfully
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 653d038f5284342d85d6a3f1
+                      user:
+                        type: string
+                        example: 653k068f5284342d85d6a1f9
+                      name:
+                        type: string
+                        example: John Doe
+                      status:
+                        type: string
+                        example: complete
+                      photo: 
+                        type: string
+                        format: date
+                        example: '2023-10-29'
+                      vaccines:
+                        type: string
+                        example: "Pnemonia"
+                      createdAt:
+                        type: string
+                        format: date
+                      updatedAt:
+                        type: string
+                        format: date
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: /api/v1/appointments/complete/4
+                      appointments:
+                        type: string
+                        example: /api/v1/appoinments
+         '400':
+           $ref: '#/components/responses/400'
+         '401':
+           $ref: '#/components/responses/401'
+         '500':
+           $ref: '#/components/responses/500'
   '/reviews':
     get:
      operationId: getAllReviews
+     security:
+      - bearerAuth: []
      tags: [Reviews]
      description: Retrive all reviews
      parameters:
+          - $ref: "#/components/parameters/pageParam"
+          - $ref: "#/components/parameters/limitParam"
+          - $ref: "#/components/parameters/sortTypeParam"
+          - $ref: "#/components/parameters/sortByParam"
+          - $ref: "#/components/parameters/reviewStatusParam"
           - in: query
             name: expand
-            description: expand user vaccine object
+            description: expand user appoinment object
             schema:
               type: string
-              example: "user,vaccine"
+              example: "user,appointment"
      responses:
       "200":
-          description: "Single Appointment view"
+          description: "Success"
           content:
             "application/json":
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   example: 200
                   message:
                     type: string
                     example: "Reviews fetched successfully"
-                  reviews:
+                  data:
                     type: array
                     items:
                       $ref: "#/components/schemas/Reviews"
@@ -1064,20 +1212,22 @@ paths:
                       self:
                         type: string
                         format: url
-                        example: "/reviews?page=2&limit=10"
+                        example: "api/v1/reviews?page=2&limit=10&sort_type=dsc&sort_by=createdAt&status=pending&expands=user,rappointment"
                       next:
                         type: string
                         format: url
-                        example: "/reviews?page=3&limit=10"
+                        example: "api/v1/reviews?page=3&limit=10&sort_type=dsc&sort_by=createdAt&status=pending&expands=user,rappointment"
                       prev:
                         type: string
                         format: url
-                        example: "/reviews?page=1&limit=10"
+                        example: "api/v1/reviews?page=1&limit=10&sort_type=dsc&sort_by=createdAt&status=pending&expands=user,rappointment"
                       appointments:
                         type: string
                         example: "/appointments"
       '400':
         $ref: '#/components/responses/400'
+      '401':
+        $ref: '#/components/responses/401'  
       '500':
         $ref: '#/components/responses/500' 
     post:   
@@ -1095,13 +1245,10 @@ paths:
                 body:
                   type: string
                   example: 'Sample review text'
-                vaccinetedId:
-                  type: string
-                  example: '123#'
                 appointmentId:
                   type: string
                   example: '123#'
-              required: [body, vaccinetedId,appointmentId]
+              required: [body,appointmentId]
       responses:
         "201":
          description: Review posted successully
@@ -1110,22 +1257,52 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 201
                   message:
                     type: string
-                    example:  Review created successful
+                    example:  Review Created successfully
                   data:
-                    $ref: "#/components/schemas/Reviews"
+                    allOf:
+                      - type: object
+                        properties:
+                          id:
+                            type: integer
+                            format: int32
+                            example: 1
+                          user:
+                            type: string
+                            format: int32
+                            example: John Doe
+                          appoinmentId:
+                            type: string
+                            example: Viral
+                          comment:
+                            type: string
+                            format: text
+                            example: The body of the comment
+                          status:
+                            type: string
+                            enum:
+                              - public
+                              - private
+                            example: public
+                        required:
+                          - id
+                          - userId
+                          - vaccineId
+                          - body
+                          - status
+                      - $ref: '#/components/schemas/Timestamp'
                   links:
                     type: object
                     properties:
                       self:
                         type: string
                         format: url
-                        example: "/reviews"
+                        example: "/api/v1/reviews"
+                      appoinments: 
+                        type: string
+                        format: url
+                        example: "/api/v1/rappointments"
         '401':
            $ref: '#/components/responses/401'
         '400':
@@ -1147,7 +1324,7 @@ paths:
             schema:
               type: object
               properties:
-                text:
+                body:
                   type: string
                   example: Updated review 1
                 status:
@@ -1155,27 +1332,59 @@ paths:
                   enum: [Active, Pending, Declined]
                   example: Pending
       responses:
-        '200':
-          description: Successfully Updated
-          content:
+        "200":
+         description: Review updated successully
+         content:
             application/json:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   example: 200
                   message:
                     type: string
-                    example: "Reviews updated successfully"
-                  review:
-                      $ref: "#/components/schemas/Reviews"
+                    example:  Review updated successully
+                  data:
+                    allOf:
+                      - type: object
+                        properties:
+                          id:
+                            type: integer
+                            format: int32
+                            example: 1
+                          user:
+                            type: string
+                            format: int32
+                            example: John Doe
+                          appoinmentId:
+                            type: string
+                            example: Viral
+                          comment:
+                            type: string
+                            format: text
+                            example: The body of the comment
+                          status:
+                            type: string
+                            enum:
+                              - public
+                              - private
+                            example: public
+                        required:
+                          - id
+                          - userId
+                          - vaccineId
+                          - body
+                          - status
+                      - $ref: '#/components/schemas/Timestamp'
                   links:
                     type: object
                     properties:
-                      appointments:
+                      self:
                         type: string
-                        example: "/appointments"
+                        format: url
+                        example: "/api/v1/reviews/1"
+                      appoinments: 
+                        type: string
+                        format: url
+                        example: "/api/v1/rappointments"
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1238,10 +1447,10 @@ paths:
                               example: Covid
                             createdAt:
                               type: string
-                              format: date-time
+                              format: date
                             updatedAt:
                               type: string
-                              format: date-time  
+                              format: date  
                             link:
                               type: string
                               format: url
@@ -1391,10 +1600,10 @@ paths:
                           example: Admin 
                       createdAt:
                         type: string
-                        format: date-time
+                        format: date
                       updatedAt:
                         type: string
-                        format: date-time
+                        format: date
                   links:
                     type: object
                     properties:
@@ -1429,13 +1638,14 @@ components:
         - type: object
           properties:
             id:
-              type: integer
-              format: int32
+              type: string
               example: 1
-            userId:
-              type: integer
-              format: int32
+            user:
+              type: string
               example: 1
+            name: 
+              type: string
+              example: user
             vaccine:
               type: string
               example: Covisheild
@@ -1445,8 +1655,8 @@ components:
                 - Complete
                 - Pending
               example: Complete
-            appintment_at:
-              format: date-time
+            date:
+              format: date
           required:
             - id
             - vaccine
@@ -1504,14 +1714,13 @@ components:
               type: integer
               format: int32
               example: 1
-            userId:
-              type: integer
+            userName:
+              type: string
               format: int32
-              example: 1
-            vaccineId:
-              type: integer
-              format: int32
-              example: 1
+              example: John Doe
+            vaccine:
+              type: string
+              example: Viral
             comment:
               type: string
               format: text
@@ -1604,10 +1813,10 @@ components:
                   properties:
                     field:
                       type: string
-                      example: email
+                      example: parameter
                     message:
                       type: string
-                      example: Invalid email
+                      example: Invalid parameter
     '401':
       description: Unauthorized
       content:
@@ -1639,7 +1848,7 @@ components:
                 type: string
                 example: Internal Server Error
     '409':
-      description: Internal Server Error
+      description: Conflict, User already exists
       content:
         application/json:
           schema:
@@ -1697,8 +1906,18 @@ components:
         type: string
         enum:
           - complete
+          - pending
+        example: pending     
+    reviewStatusParam:
+      in: query
+      name: status
+      description: Filter status
+      schema:
+        type: string
+        enum:
           - approved
-        example: approved     
+          - pending
+        example: pending 
     idQueryParam:
       in: query
       name: appointment
@@ -1722,3 +1941,14 @@ components:
       schema:
         type: string
         example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c  
+    appoinmentIdPathParam:
+      in: path
+      name: appointmentId
+      required: true
+      description: appointment Id
+      schema:
+        type: string
+        example: 1
+#important formats
+# date-time 
+# int32

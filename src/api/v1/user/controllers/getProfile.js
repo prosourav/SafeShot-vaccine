@@ -6,14 +6,16 @@ const getProfile = async (req, res, next) => {
     const profile = await userService.getProfile({ id });
     delete profile._id;
     delete profile.password;
+    delete profile.token;
+    delete profile.__v;
+
 
     const response = {
-      code: 200,
       message: "Profile data fetched successfully",
       data: profile,
       links: {
-        self: `/user/profile`,
-        appointments: `/appointments/${id}`
+        self: `/api/v1/user/profile`,
+        appointments: `/api/v1/appointments/`
       },
     };
 

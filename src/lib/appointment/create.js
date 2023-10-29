@@ -8,7 +8,6 @@ const create = async ({
   vaccine, date, user
 }) => {
 
-  console.log('user', user);
   if (!vaccine || !date || !user) {
     throw createHttpError.BadRequest();
   };

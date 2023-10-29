@@ -16,7 +16,7 @@ const findAllItem = async ({
 
   (!Object.keys(filter).length) ?
     filterSearch = { $and: [{ name: { $regex: search, $options: 'i' } }, { status }] } :
-    filterSearch = { $and: [filter, { name: { $regex: search, $options: 'i' } }] }
+    filterSearch = { $and: [filter, { name: { $regex: search, $options: 'i' } }, { status }] }
   
   const appoinments = await Appointment.find(filterSearch)
     .populate({ path: 'user', select: 'name email', })

@@ -7,7 +7,7 @@ const config = {
   search: '',
   expands: [],
   status: 'pending',
-  reviewFilter: 'approved',
+  reviewStatus: 'pending',
   vaccines: ['Pneumonia', 'Covid', 'Viral']
 };
 

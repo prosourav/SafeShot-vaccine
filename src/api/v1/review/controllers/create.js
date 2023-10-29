@@ -8,20 +8,20 @@ const create = async (req, res, next) => {
 
     let review = await reviewService.create({
       appointmentId,
-      body,
+      comment: body,
       status,
       user: req.user,
     });
 
     delete review._id;
+    delete review.__v;
 
     const response = {
-      code: 201,
       message: 'Review Created Successfully',
       data: { ...review },
       links: {
-        self: `/reviews`,
-        appointments: `/appointments`
+        self: `/api/v1/reviews`,
+        appointments: `/api/v1/appointments`
       },
     };
 

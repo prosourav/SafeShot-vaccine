@@ -11,7 +11,6 @@ const hasPermission =
           resourceId: req.params.id,
           userId: req.user.id,
         });
-
         if (isOwner || req.user.role === 'doctor' || req.user.role === 'admin') {
           return next();
         }

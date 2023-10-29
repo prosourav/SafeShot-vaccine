@@ -29,7 +29,7 @@ router
 
 router
   .route('/api/v1/appointments')
-  .get(authenticate, setFilterByRole, appointmentController.findAllItem)
+  .get(authenticate, setFilterByRole, appointmentValidator.allappointmentsValidator, requestValidator, appointmentController.findAllItem)
   .post(authenticate, authorize(['user', 'admin']), appointmentValidator.appointmentCreateValidator, requestValidator, appointmentController.create)
 
 router
@@ -50,33 +50,33 @@ router
 router
   .route('/api/v1/reviews')
   .get(authenticate, authorize(['user', 'admin', 'doctor']), reviewController.findAllItem)
-  .post(authenticate, authorize(['user']), reviewValidator.createValidator, requestValidator,reviewController.create)
-
-
-router
-  .route('/api/v1/reviews/:id')
-  .patch(authenticate, authorize(['user', 'admin']), hasPermission('Review'), reviewValidator.findSingleItemValidator, requestValidator, reviewController.updateItem)
-  .delete(authenticate, authorize(['user', 'admin']), hasPermission('Review'), reviewValidator.findSingleItemValidator, requestValidator, reviewController.deleteItem);
+  .post(authenticate, authorize(['user']), reviewValidator.createValidator, requestValidator, reviewController.create)
 
 router
-  .route('/api/v1/users')
-  .get(authenticate, authorize(['admin']), userController.findAllItem)
-  .post(authenticate, authorize(['admin']), userValidator.createValidator, requestValidator, userController.create)
+   .route('/api/v1/reviews/:id')
+   .patch(authenticate, authorize(['user', 'admin']), hasPermission('Review'), reviewValidator.findSingleItemValidator, requestValidator, reviewController.updateItem)
+   .delete(authenticate, authorize(['user', 'admin']), hasPermission('Review'), reviewValidator.findSingleItemValidator, requestValidator, reviewController.deleteItem);
 
-router
-  .route('/api/v1/users/:id')
-  .get(authenticate, authorize(['admin', 'doctor']), userValidator.findSingleItemValidator, requestValidator, userController.findSingleItem)
-  .patch(authenticate, authorize(['admin', 'doctor']), userValidator.findSingleItemValidator, requestValidator, userController.updateItem)
-  .delete(authenticate, authorize(['admin', 'doctor']), userValidator.findSingleItemValidator, requestValidator, userController.deleteItem);
+ // TODO: 
+// router
+//   .route('/api/v1/users')
+//   .get(authenticate, authorize(['admin']), userController.findAllItem)
+//   .post(authenticate, authorize(['admin']), userValidator.createValidator, requestValidator, userController.create)
 
-router
-  .route('/api/v1/change_admin/:id')
-  .patch(authenticate, authorize(['admin']), userValidator.adminChangeValidator, requestValidator, userController.changeAdmin);
+// router
+//   .route('/api/v1/users/:id')
+//   .get(authenticate, authorize(['admin', 'doctor']), userValidator.findSingleItemValidator, requestValidator, userController.findSingleItem)
+//   .patch(authenticate, authorize(['admin', 'doctor']), userValidator.findSingleItemValidator, requestValidator, userController.updateItem)
+//   .delete(authenticate, authorize(['admin', 'doctor']), userValidator.findSingleItemValidator, requestValidator, userController.deleteItem);
 
-router
-  .route('/api/v1/vaccines')
-  .post(authenticate, authorize(['admin']), vaccinevalidator.vaccineAddRequestValidator, requestValidator, vaccineController.create)
-  .get(authenticate, authorize(['admin', 'doctor']), vaccineController.findAllItem);
+// router
+//   .route('/api/v1/change_admin/:id')
+//   .patch(authenticate, authorize(['admin']), userValidator.adminChangeValidator, requestValidator, userController.changeAdmin);
+
+// router
+//   .route('/api/v1/vaccines')
+//   .post(authenticate, authorize(['admin']), vaccinevalidator.vaccineAddRequestValidator, requestValidator, vaccineController.create)
+//   .get(authenticate, authorize(['admin', 'doctor']), vaccineController.findAllItem);
 
 module.exports = router;
 
