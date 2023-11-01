@@ -9,15 +9,17 @@ const changeAdmin = async (req, res, next) => {
     newAdmin.id = newAdmin._id;
     delete newAdmin._id;
     delete newAdmin.password;
+    delete newAdmin.__v;
+    delete newAdmin.status;
+    delete newAdmin.vaccines;
+    delete newAdmin.token;
 
     const response = {
-      code: 200,
-      message: 'Successfuly updated admin',
+      message: 'Admin updated successfully',
       data: { ...newAdmin },
       link: {
-        self: `./change_admin/${id}`,
-        appointments: '/appointments',
-        users: '/users'
+        self: `/api/v1/change_admin/${id}`,
+        logout: '/api/v1/logout'
       }
     }
     res.status(200).json(response);

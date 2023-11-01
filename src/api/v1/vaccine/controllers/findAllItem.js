@@ -8,29 +8,29 @@ const findAllItems = async (req, res, next) => {
   const limit = +req.query.limit || defaults.limit;
   const sortType = req.query.sort_type || defaults.sortType;
   const sortBy = req.query.sort_by || defaults.sortBy;
-  const search = req.query.search || defaults.search;
-  const { filter } = req;
-
+  const filter = req.query.name || defaults.fiilter;
+  const status = req.query.status || defaults.status;
   try {
 
-    // data
     const vaccines = await vaccineService.findAllItem({
       filter,
       page,
       limit,
       sortType,
       sortBy,
-      search
+      status
     });
+
 
     const data = query.getTransformedItems({
       items: vaccines,
-      path: '/appointments',
-      selection: ['_id', 'name', 'vaccine', 'link', 'date', 'createdAt'],
+      path: '/vaccines',
+      selection: ['_id', 'name', 'link', 'createdAt', 'status'],
     });
 
+
     // pagination
-    const totalItems = await vaccineService.count({ filter, search });
+    const totalItems = await vaccineService.count({ filter, status });
     const pagination = query.getPagination({ totalItems, limit, page });
 
     // HATEOAS Links
@@ -43,8 +43,9 @@ const findAllItems = async (req, res, next) => {
       page,
     });
 
+    // delete data.__v;
+
     res.status(200).json({
-      code: 200,
       message: 'Appointments fetched successfully',
       data,
       pagination,

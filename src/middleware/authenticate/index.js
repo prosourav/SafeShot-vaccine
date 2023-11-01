@@ -3,15 +3,14 @@ const { verifyToken } = require('../../lib/token');
 const userService = require('../../lib/user');
 
 const authenticate = async (req, _res, next) => {
-
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = verifyToken({ token });
 
     const user = await userService.findUserByEmail(decoded.email);
-
+   
     if (!user) {
-      console.log('Got!')
+ 
       next(createHttpError.Unauthorized("Authentication Failed"));
     }
 

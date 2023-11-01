@@ -1,13 +1,13 @@
 const config = {
   totalItems: 0,
-  limit: 2,
+  limit: 1,
   page: 1,
   sortType: 'dsc',
   sortBy: 'updatedAt',
   search: '',
   expands: [],
-  status: 'pending',
-  reviewStatus: 'pending',
+  status: '',
+  filter: '',
   vaccines: ['Pneumonia', 'Covid', 'Viral']
 };
 

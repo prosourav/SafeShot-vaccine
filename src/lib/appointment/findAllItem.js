@@ -15,15 +15,19 @@ const findAllItem = async ({
   const sortStr = `${sortType === 'dsc' ? '-' : ''}${sortBy}`;
 
   (!Object.keys(filter).length) ?
-    filterSearch = { $and: [{ name: { $regex: search, $options: 'i' } }, { status }] } :
-    filterSearch = { $and: [filter, { name: { $regex: search, $options: 'i' } }, { status }] }
-  
+    filterSearch = { $and: [{ name: { $regex: search, $options: 'i' } }] } :
+    filterSearch = { $and: [filter, { name: { $regex: search, $options: 'i' } }] }
+
+  if (status) {
+    filterSearch.$and.push({status: status});
+  };
+
   const appoinments = await Appointment.find(filterSearch)
     .populate({ path: 'user', select: 'name email', })
     .sort(sortStr)
     .skip(page * limit - limit)
     .limit(limit);
- 
+
   return appoinments.map((appointment) => ({
     ...appointment._doc,
     id: appointment._id,

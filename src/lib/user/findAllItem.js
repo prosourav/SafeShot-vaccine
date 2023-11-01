@@ -7,10 +7,13 @@ const findAllItem = async ({
   sortType = defaults.sortType,
   sortBy = defaults.sortBy,
   search = defaults.search,
-  filter= defaults.filter
+  filter = defaults.status,
 }) => {
 
-  let filterSearch = { name: { $regex: search, $options: 'i' }, status: filter };
+  let filterSearch = { name: { $regex: search, $options: 'i' } };
+  if (filter) {
+    filterSearch['status'] = filter;
+  }
   const sortStr = `${sortType === 'dsc' ? '-' : ''}${sortBy}`;
 
   const users = await User.find(filterSearch)

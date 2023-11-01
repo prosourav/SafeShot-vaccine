@@ -6,14 +6,15 @@ const findSingleItem = async (req, res, next) => {
     const profile = await userService.findSingleItem({ id });
     delete profile._id;
     delete profile.password;
+    delete profile.token
+    delete profile.__v
 
     const response = {
-      code: 200,
       message: "User data fetched successfully",
       data: profile,
       links: {
-        self: `/users/${id}`,
-        appointments: `/appointments/${id}`
+        self: `api/v1/users/${id}`,
+        appointments: `/api/v1/appointments/${id}`
       },
     };
 

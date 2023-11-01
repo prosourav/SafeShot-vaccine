@@ -126,9 +126,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2O
 }
 
 ###
-GET http://localhost:8000/api/v1/users/6533d46d90d39c49def57971
+GET http://localhost:8000/api/v1/users/653d0591fc9aa161781d9132
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODM0Mzk0MywiZXhwIjoxNjk4MzQ1NzQzfQ.-zHdswF9y7wz98Ta_-YeqbXFRHgPThZMl4fvUfquW8k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2NmODhlZWQxY2Q3NDk5Y2RlNTc5NSIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoiZGV2LnNvdXJhdnNhaGFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk4NzQyMjEyLCJleHAiOjE2OTg3NDQwMTJ9.8TyURMOTE90K2mC2-DpLXeaxSQqYfTHTQK-k6Z6rD-4
 
 ###
 PATCH  http://localhost:8000/api/v1/users/6533d46d90d39c49def57971
@@ -164,6 +164,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2NmODhlZ
 ###
 
 ### v3
-1. Make user able to signup later
+1. Create a proviton for unverified user to verify later on
 2. Forgot password
-3. Review Filter
+3. Review Search by user name

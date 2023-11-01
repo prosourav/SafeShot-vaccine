@@ -8,15 +8,19 @@ const create = async (req, res, next) => {
     let newVaccine = await vaccineService.create({
       name,
     });
-
+    newVaccine.id = newVaccine._id;
     delete newVaccine._id;
+    delete newVaccine.__v;
+    delete newVaccine.status;
+
 
     const response = {
-      code: 201,
       message: 'Vaccine added successfully',
       data: { ...newVaccine },
       links: {
-        self: `/vaccines`,
+        self: `/api/v1/vaccines`,
+        users:'/api/v1/users',
+        reviews: '/api/v1/reviews'
       },
     };
 

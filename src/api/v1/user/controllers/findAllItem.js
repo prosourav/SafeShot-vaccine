@@ -11,7 +11,7 @@ const findAllItem = async (req, res, next) => {
   const sortType = req.query.sort_type || defaults.sortType;
   const sortBy = req.query.sort_by || defaults.sortBy;
   const search = req.query.search || defaults.search;
-  const filter = req.query.filter || defaults.status;
+  const filter = req.query.status;
   
   try {
     // data
@@ -23,10 +23,11 @@ const findAllItem = async (req, res, next) => {
       search,
       filter,
     });
+    // console.log('controller',users);
     const data = getTransformedItems({
       items: users,
       path: '/users',
-      selection: ['_id', 'name', 'link', 'createdAt', 'photo', 'vaccines', 'role', 'email'],
+      selection: ['id', 'name', 'link', 'createdAt', 'updatedAt', 'status', 'photo', 'role', 'email', 'vaccines',],
     });
 
     // pagination
@@ -44,8 +45,7 @@ const findAllItem = async (req, res, next) => {
     });
 
     res.status(200).json({
-      code: 200,
-      message: 'users fetched successfully',
+      message: 'Users fetched successfully',
       data,
       pagination,
       links,

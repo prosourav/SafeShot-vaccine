@@ -612,12 +612,12 @@ paths:
         - Admin
       description: Retrive all users
       parameters:
-          - in: query
-            name: expand
-            description: expand vaccine, role,review, status object
-            schema:
-               type: string
-               example: vaccine,role,review,status
+        - $ref: "#/components/parameters/pageParam"
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/sortTypeParam"
+        - $ref: "#/components/parameters/sortByParam"
+        - $ref: "#/components/parameters/searchParam"
+        - $ref: "#/components/parameters/userStatusParam"
       responses:
         '200':
           description: Return a list of users
@@ -626,12 +626,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   example: 200
                   message:
                     type: string
-                    example: Appoinemts fetched successfully
+                    example: Users fetched successfully
                   data:
                     type: array
                     items:
@@ -650,12 +647,11 @@ paths:
                               example: john123@example.com
                             role: 
                               type: string
-                              enum: [User, Admin]
-                              example: [User,Admin]
+                              enum: ['user', 'admin']
+                              example: user
                             vacination:
-                              type: string
-                              enum: [Covid,Viral,Pneumonia]
-                              example: Viral
+                              type: array
+                              example: ['653df91a121b180d6d201d45', '651df91a121b180d6d201d41']
                             photo:
                               type: string
                               format: url
@@ -669,7 +665,7 @@ paths:
                             link:
                               type: string
                               format: url
-                              example: /appointments/1
+                              example: /api/v1/appointments/1
                           required:
                             - id
                             - title
@@ -683,12 +679,16 @@ paths:
                     properties:
                       self:
                         type: string
-                        example: /appointments
+                        example: /api/v1/appointments
                       review:
                         type: string
-                        example: /reviews
+                        example: /api/v1/reviews
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'  
         '500':
           $ref: '#/components/responses/500'
     post:
@@ -748,61 +748,22 @@ paths:
                     properties:
                       self:
                         type: string
-                        example: /auth/signup
+                        example: /api/v1/users
                       users:
                         type: string
                         example: /users
+                      appoinment:  
+                        type: string
+                        example: /api/v1/appointments
                       vaccines: 
                         type: string
-                        example: /vaccines
+                        example: /api/v1/vaccines
         '400':
           $ref: '#/components/responses/400'
-        '500':
-          $ref: '#/components/responses/500'
         '401':
           $ref: '#/components/responses/401'  
-    patch:
-      operationId: updateAnUser
-      security:
-        - bearerAuth: []
-      tags:
-        - Admin
-      description: Partially update an user
-      parameters:
-        - $ref: '#/components/parameters/idPathParam'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: John Doe
-                email:
-                  type: string
-                  format: email
-                  example: john@abc.com
-                password:
-                  type: string
-                  example: secret
-                vaccination:
-                  type: string
-                  enum: [Pneumonia, Covid]
-                  example: [Pneumonia]
-      responses:
-        '200':
-          description: Successfully Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AppointmentUpdateDTO'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '404':
-          $ref: '#/components/responses/404'
+        '403':
+          $ref: '#/components/responses/403'  
         '500':
           $ref: '#/components/responses/500'
   '/users/profile':
@@ -933,6 +894,8 @@ paths:
   '/users/{id}':
     get: 
      operationId: getSingleUser
+     security:
+        - bearerAuth: []
      tags: [Doctor]
      description: Get a single user's detail
      parameters:
@@ -945,16 +908,15 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 200
                   message:
                     type: string
-                    example: Profile data fetched successfully
+                    example: User data fetched successfully
                   data:
                     type: object
                     properties:
+                      id:
+                        type: string
+                        example: 653d0591fc9aa161781d9132
                       name:
                         type: string
                         example: John Doe
@@ -966,14 +928,18 @@ paths:
                         type: string
                         format: url
                         example: https://s3.aws.com/myfirstblog/124.jpg
+                      status:
+                        type: string
+                        format: approved
+                        example: john@abc.com  
                       role: 
                         type: string
                         enum: [Admin,Docter,Paitent]
                         example: Paitent
-                      vaccination:
-                        type: string
-                        enum: [Covisheild,Pnemonia,Viral]
-                        example: ["Covisheild", "Pnemonia"]
+                      vaccines: 
+                        type: array
+                        items:
+                           $ref: '#/components/schemas/Vaccine'
                       createdAt:
                         type: string
                         format: date
@@ -985,10 +951,10 @@ paths:
                     properties:
                       self:
                         type: string
-                        example: /profile
+                        example: /api/v1/users/1
                       appointments:
                         type: string
-                        example: /appoinments
+                        example: /api/v1/appoinments
         '400':
           $ref: '#/components/responses/400'
         '500':
@@ -1014,20 +980,10 @@ paths:
                     type: string
                     format: url
                     example: https://s3.aws.com/myfirstblog/134.jpg
-                  vaccination:
-                        type: array
-                        items:
-                          type: string
-                          enum: ["complete", "pending"]
-                  status:
-                    type: string
-                    enum: ['pending', 'complete']
-                    example: 'complete'
                   password: 
                     type: string
                     format: password
                     example: 'password'
-
       responses:
         '200':
           description: User data updated successfully
@@ -1036,10 +992,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 200
                   message:
                     type: string
                     example: User data updated successfully
@@ -1053,24 +1005,10 @@ paths:
                         type: string
                         format: email
                         example: john@abc.com
-                      photo: 
-                        type: string
-                        format: url
-                        example: https://s3.aws.com/myfirstblog/134.jpg
-                      vaccination:
-                        type: string
-                        enum: 
-                          - Covisheild
-                          - Pnemonia
-                        example: ["Covisheild", "Pnemonia"]
-                      # status: 
-                      #     type: string
-                      #     enum: [Complete, Pending]
-                      #     example: Pending
                       role: 
                           type: string
-                          enum: [Admin,Docter,Paitent]
-                          example: Paitent 
+                          enum: [admin,user]
+                          example: user
                       createdAt:
                         type: string
                         format: date
@@ -1082,12 +1020,14 @@ paths:
                     properties:
                       self:
                         type: string
-                        example: /profile
+                        example: /api/v1/user/653cf88eed1cd7499cde5795
                       appointments:
                         type: string
-                        example: /appoinments
+                        example: /api/v1//appoinments
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500' 
     delete:
@@ -1168,6 +1108,8 @@ paths:
            $ref: '#/components/responses/400'
          '401':
            $ref: '#/components/responses/401'
+         '403':
+          $ref: '#/components/responses/403'   
          '500':
            $ref: '#/components/responses/500'
   '/reviews':
@@ -1418,6 +1360,13 @@ paths:
       tags:
         - Admin
       description: Retrive all vaccine
+      parameters:
+        - $ref: "#/components/parameters/pageParam"
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/sortTypeParam"
+        - $ref: "#/components/parameters/sortByParam"
+        - $ref: "#/components/parameters/vaccineParam"
+        - $ref: "#/components/parameters/vaccineStatusParam"
       responses:
         '200':
           description: Return a list of vaccine
@@ -1426,9 +1375,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   example: 200
                   message:
                     type: string
                     example: Vaccins fetched successfully
@@ -1457,9 +1403,8 @@ paths:
                               example: /vaccine/1
                           required:
                             - id
-                            - title
-                            - author
-                            - appointeme-time
+                            - name
+                            - createdAt
                         - $ref: '#/components/schemas/Timestamp'
                   pagination: 
                         $ref: "#/components/schemas/Pagination"       
@@ -1491,13 +1436,10 @@ paths:
               properties:
                 name:
                   type: string
-                  example: 'Viral shot'
-                vaccine-id:
-                  type: string
-                  example: 65#bdh
+                  enum: ['Pneumonia', 'Covid', 'Viral']
+                  example: 'Pneumonia'
               required:
                 - name
-                - vaccine-id
       responses:
         '201':
           description: Vaccine added successfully
@@ -1506,10 +1448,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  # code:
-                  #   type: integer
-                  #   format: int32
-                  #   example: 201
                   message:
                     type: string
                     example:  Vaccine added successfully
@@ -1518,14 +1456,12 @@ paths:
                     properties:
                       id:
                        type: string
-                       example: g#dsjhdfhg
+                       format: uuid
+                       example: sdfghjklwure0329u
                       name: 
                         type: string
-                        example: John Doe
-                      email:
-                        type: string
-                        format: email
-                        example: john@abc.com
+                        enum: ['Pneumonia', 'Covid', 'Viral']
+                        example: Pneumonia
                   links:
                     type: object
                     properties:
@@ -1543,27 +1479,10 @@ paths:
         '500':
           $ref: '#/components/responses/500'
         '401':
-          $ref: '#/components/responses/401'  
-  '/vaccins/{id}':
-    delete:
-      operationId: deleteVaccine
-      security:
-        - bearerAuth: []
-      tags:
-        - Admin
-      description: Delete a vaccine by id
-      parameters:
-        - $ref: '#/components/parameters/idPathParam'
-      responses:
-        '204':
-          description: Vaccine deleted successfully
-        '401':
           $ref: '#/components/responses/401'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
-  '/api/v1/change_admin/{id}':
+        '403':
+          $ref: '#/components/responses/403' 
+  '/change_admin/{id}':
    patch:
       operationId: changeAdmin
       security:
@@ -1609,20 +1528,16 @@ paths:
                     properties:
                       self:
                         type: string
-                        example: /admin
-                      appointments:
+                        example: /api/v1/change_admin/653d01a9b0f5338dbd35b06d
+                      logout:
                         type: string
-                        example: /appoinments
-                      users:
-                        type: string
-                        example: /users
-                      vaccines:
-                        type: string
-                        example: /vaccines
+                        example: /api/v1/auth/logout
         '400':
           $ref: '#/components/responses/400' 
         '401':
           $ref: '#/components/responses/401' 
+        '403':
+          $ref: '#/components/responses/403'  
         '500':
           $ref: '#/components/responses/500' 
 
@@ -1795,6 +1710,21 @@ components:
         - limit
         - totalPage
         - totalItems
+    Vaccine:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        appointment:
+          type: string
+          format: uuid
+      required:
+        - _id
+        - name
+        - appointment
   responses:
     '400':
       description: Bad Request
@@ -1827,6 +1757,16 @@ components:
               message:
                 type: string
                 example: Unauthorized
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Forbidden
     '404':
       description: Resource Not Found
       content:
@@ -1908,6 +1848,38 @@ components:
           - complete
           - pending
         example: pending     
+    userStatusParam:
+      in: query
+      name: status
+      description: Filter status
+      schema:
+        type: string
+        enum:
+          - approved
+          - pending
+          - blocked
+        example: pending 
+    vaccineParam:
+      in: query
+      name: name
+      description: Filter by vaccine name
+      schema:
+        type: string
+        enum:
+          - Covid
+          - Pneumonia
+          - Viral
+        example: Covid 
+    vaccineStatusParam:
+        in: query
+        name: status
+        description: Filter by vaccine status
+        schema:
+          type: string
+          enum:
+            - used
+            - available
+          example: available 
     reviewStatusParam:
       in: query
       name: status
@@ -1917,6 +1889,7 @@ components:
         enum:
           - approved
           - pending
+          - rejected
         example: pending 
     idQueryParam:
       in: query

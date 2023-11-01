@@ -6,10 +6,21 @@ const findAllItem = async ({
   limit = defaults.limit,
   sortType = defaults.sortType,
   sortBy = defaults.sortBy,
-  search = defaults.search,
+  filter = defaults.filter,
+  status = defaults.status,
 }) => {
 
-  let filterSearch = { name: { $regex: search, $options: 'i' } };
+  let filterSearch = [];
+  if (filter && status) {
+    filterSearch = { $and: [{ name: { $regex: filter, $options: 'i' } },{ status: { $regex: status, $options: 'i' } }] };
+  } else {
+    filterSearch = {
+      $and: [
+        filter ? { name: { $regex: filter, $options: 'i' } } : {},
+        status ? { status: { $regex: status, $options: 'i' } } : {},
+      ],
+    };
+  }
   const sortStr = `${sortType === 'dsc' ? '-' : ''}${sortBy}`;
 
   const vaccines = await Vaccine.find(filterSearch)

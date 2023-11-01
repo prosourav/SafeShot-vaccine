@@ -8,7 +8,7 @@ const updateProfile = require('./updateProfile');
 const updateItem = require('./updateItem');
 const deleteItem = require('./deleteItem');
 const findSingleItem = require('./findSingleItem');
-// const changeAdmin = require('./changeAdmin');
+const changeAdmin = require('./changeAdmin');
 const findAllItem = require('./findAllItem');
 const count = require('./count');
 const create = require('./create');
@@ -24,7 +24,7 @@ module.exports = {
   updateItem,
   deleteItem,
   findSingleItem,
-  // changeAdmin,
+  changeAdmin,
   findAllItem,
   count
 };

@@ -21,8 +21,6 @@ const findAllItems = async (req, res, next) => {
       status,
       expands,
     });
-
-    console.log(reviews);
     
     // const data = getTransformedItems({
     //   items: reviews,
@@ -42,7 +40,6 @@ const findAllItems = async (req, res, next) => {
       hasPrev: !!pagination.prev,
       page,
     });
-console.log()
 
     // for (let item of data) {
     //   item.vaccine = item.appointmentId.vaccine;

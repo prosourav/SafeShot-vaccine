@@ -4,7 +4,7 @@ const  createUser  = require('./createUser');
 const  itemExist  = require('./itemExist');
 
 // create by admin
-const create = async ({ name, email, password }) => {
+const create = async ({ name, email, password, status }) => {
 
   email = email.toLowerCase();
 
@@ -15,7 +15,7 @@ const create = async ({ name, email, password }) => {
   }
 
   password = await generateHash(password);
-  const user = await createUser({ name, email, password });
+  const user = await createUser({ name, email, password, status });
   delete user.password;
   delete user.token;
   delete user._id;

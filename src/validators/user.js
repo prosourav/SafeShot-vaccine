@@ -1,4 +1,4 @@
-const { body, param } = require("express-validator");
+const { body, param, query } = require("express-validator");
 
 
 const adminChangeValidator = [
@@ -38,6 +38,38 @@ const createValidator = [
     // .withMessage('Password must be strong')
 ];
 
+const alluserValidator = [
+  query("page")
+    .optional()
+    .isInt({ gt: 0, lt: 12000 })
+    .withMessage('Invalid query parameter'),
+
+  query("limit")
+    .optional()
+    .isInt({ gt: 0, lt: 12000 })
+    .withMessage('Invalid query parameter'),
+
+  query("sort_type")
+    .optional()
+    .isIn(['asc', 'dsc'])
+    .withMessage('Invalid query parameter'),
+
+  query("sort_by")
+    .optional()
+    .isIn(['createdAt', 'updatedAt', 'date', 'name', 'vaccine'])
+    .withMessage('Invalid query parameter'),
+
+  query("status")
+    .optional()
+    .isIn(['pending', 'approved', 'blocked'])
+    .withMessage('Invalid query parameter'),
+
+  query("search")
+    .optional()
+    .notEmpty()
+    .isString().withMessage('Invalid search parameter'),
+];
+
 const findSingleItemValidator =[
   param('id')
     .notEmpty()
@@ -45,4 +77,6 @@ const findSingleItemValidator =[
     .escape(),
 ];
 
-module.exports = { adminChangeValidator, createValidator, findSingleItemValidator };
+
+
+module.exports = { adminChangeValidator, createValidator, findSingleItemValidator, alluserValidator };
