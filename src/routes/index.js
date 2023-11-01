@@ -26,52 +26,52 @@ router
   .post('/api/v1/auth/login', authValidator.loginRequestValidator, requestValidator, authController.login)
   .post('/api/v1/auth/refresh', authValidator.refreshRequestValidator, requestValidator, authController.refresh)
   .post('/api/v1/auth/logout', authenticate, authValidator.logoutRequestValidator, requestValidator, authController.logout)
-
+// take appointment and get all appointment
 router
   .route('/api/v1/appointments')
   .get(authenticate, setFilterByRole, appointmentValidator.allappointmentsValidator, requestValidator, appointmentController.findAllItem)
   .post(authenticate, authorize(['user', 'admin']), appointmentValidator.appointmentCreateValidator, requestValidator, appointmentController.create)
-
+// get a singe appointment details or update/delete 
 router
   .route('/api/v1/appointments/:id')
   .get(authenticate, hasPermission('Appointment'), appointmentValidator.appointmentSpecificValidator, requestValidator, appointmentController.findSingleItem)
   .patch(authenticate, authorize(['admin']), appointmentValidator.appointmentSpecificValidator, requestValidator, appointmentController.updateItem)
   .delete(authenticate, authorize(['user', 'admin']), hasPermission('Appointment'), appointmentValidator.appointmentSpecificValidator, requestValidator, ownership('Appointment'), appointmentController.deleteItem);
-
+// mark a appointment as completed
 router
   .route('/api/v1/appointments/complete/:appointmentId')
   .patch(authenticate, authorize(['doctor', 'admin']), appointmentValidator.completeAppointmentValidator, requestValidator, appointmentController.completeProcedure);
-
+// get your profile details
 router
   .route('/api/v1/users/profile')
   .get(authenticate, userController.getProfile)
   .patch(authenticate, userController.updateProfile);
-
+// get all reviews or create one
 router
   .route('/api/v1/reviews')
   .get(authenticate, authorize(['user', 'admin', 'doctor']), reviewValidator.allreviewValidator, requestValidator, reviewController.findAllItem)
   .post(authenticate, authorize(['user']), reviewValidator.createValidator, requestValidator, reviewController.create)
-
+// update or delete review
 router
    .route('/api/v1/reviews/:id')
    .patch(authenticate, authorize(['user', 'admin']), hasPermission('Review'), reviewValidator.findSingleItemValidator, requestValidator, reviewController.updateItem)
    .delete(authenticate, authorize(['user', 'admin']), hasPermission('Review'), reviewValidator.findSingleItemValidator, requestValidator, reviewController.deleteItem);
-
+// get or create a new user
 router
   .route('/api/v1/users')
   .get(authenticate, authorize(['admin']), userValidator.alluserValidator, requestValidator, userController.findAllItem)
   .post(authenticate, authorize(['admin']), userValidator.createValidator, requestValidator, userController.create)
-
+// get a single user details, update/delete a user
 router
   .route('/api/v1/users/:id')
   .get(authenticate, authorize(['admin', 'doctor']), userValidator.findSingleItemValidator, requestValidator, userController.findSingleItem)
   .patch(authenticate, authorize(['admin', 'doctor']), userValidator.findSingleItemValidator, requestValidator, userController.updateItem)
   .delete(authenticate, authorize(['admin', 'doctor']), userValidator.findSingleItemValidator, requestValidator, userController.deleteItem);
-
+// change admin
 router
   .route('/api/v1/change_admin/:id')
   .patch(authenticate, authorize(['admin']), userValidator.adminChangeValidator, requestValidator, userController.changeAdmin);
-
+// get all vaccines or add a new one
 router
   .route('/api/v1/vaccines')
   .post(authenticate, authorize(['admin']), vaccinevalidator.vaccineAddRequestValidator, requestValidator, vaccineController.create)
