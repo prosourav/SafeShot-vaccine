@@ -88,3 +88,4 @@ module.exports = router;
 // 1. Create a proviton for unverified user to verify later on
 // 2. Forgot password
 // 3. Review Search by user name
+// 4. Find all appointments by a date
