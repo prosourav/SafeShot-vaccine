@@ -6,6 +6,7 @@ const reviewService = require('../../lib/review');
 const hasPermission =
   (model = '') =>
     async (req, _res, next) => {
+      
       if (model === 'Appointment') {
         const isOwner = await appointmentService.checkOwnership({
           resourceId: req.params.id,
@@ -15,7 +16,9 @@ const hasPermission =
           return next();
         }
         return next(authorizationError());
-      } else if (model === 'Review') {
+      };
+      
+      if (model === 'Review') {
         const isOwner = await reviewService.checkOwnership({
           resourceId: req.params.id,
           userId: req.user.id,
