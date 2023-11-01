@@ -80,8 +80,11 @@ router
 module.exports = router;
 
 //TODO:
-// Check reviews pagination
-// swagger update
 // doc update
 // clean and optimise code
 // github update
+
+// ### v3
+// 1. Create a proviton for unverified user to verify later on
+// 2. Forgot password
+// 3. Review Search by user name
