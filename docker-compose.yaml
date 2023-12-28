@@ -26,8 +26,34 @@ services:
     ports: 
       - '8081:8081' 
     depends_on:
-      - mongodb   
+      - mongodb 
+
+# Node Api Service
+  api:
+    build: .
+    ports: 
+      - 8000:8000
+    volumes:
+      - .:/usr/src/app
+    environment:
+      PORT: 8000
+      DB_USER_NAME: 'testuser'
+      DB_PASSWORD :  'testpassword'
+      DB_CONNECTION_URL :  'mongodb://mongodb:27017'
+      DB_URL_QUERY :  ''
+      DB_NAME : 'safeshot_vaccination_prd'
+      ACCESS_TOKEN_SECRET :  'Secret'
+      REFRESH_TOKEN_SECRET :  'TopSecret'
+      TRANSPORT_OWNER :  'prosourav49@gmail.com'
+      TRANSPORT_OWNER_SECRET :  'cdlyrpkfhllfzmep'
+      CLIENT_APPLICATION_URL :  'http://localhost:8000/api/v1/verify'
+    depends_on:
+      - mongodb
+      - mongo_express
+
 
 volumes:
     my_mongodb_data:
       driver: local
+
+      # docker compose https://www.youtube.com/watch?v=vm3YfOHf_Cc&t=1855s (Mafiia codes)
