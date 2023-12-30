@@ -43,7 +43,7 @@ services:
       DB_PASSWORD :  'testpassword'
       DB_CONNECTION_URL :  'mongodb://mongodb:27017'
       DB_URL_QUERY :  ''
-      DB_NAME : 'safeshot_vaccination_prd'
+      DB_NAME : 'safeshot_vaccination'
       ACCESS_TOKEN_SECRET :  'Secret'
       REFRESH_TOKEN_SECRET :  'TopSecret'
       TRANSPORT_OWNER :  'prosourav49@gmail.com'
