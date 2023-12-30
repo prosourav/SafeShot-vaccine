@@ -15,6 +15,7 @@ services:
          - 'my_mongodb_data:/data/db'
 
 # Mongo Express
+# http://localhost:8081/db/safeshot_vaccination/
   mongo_express:
     image: mongo-express:latest
     container_name: mongo-express
@@ -33,6 +34,7 @@ services:
     build: .
     ports: 
       - 8000:8000
+  #this is for live change of container server 
     volumes:
       - .:/usr/src/app
     environment:
@@ -47,6 +49,7 @@ services:
       TRANSPORT_OWNER :  'prosourav49@gmail.com'
       TRANSPORT_OWNER_SECRET :  'cdlyrpkfhllfzmep'
       CLIENT_APPLICATION_URL :  'http://localhost:8000/api/v1/verify'
+      # this node container will not work if below app is not working
     depends_on:
       - mongodb
       - mongo_express
