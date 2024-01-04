@@ -15,7 +15,8 @@ const register = async ({ name, email, password, token }) => {
   if (!user) {
     throw createHttpError.InternalServerError();
   }
-  return await sendEmailForRegistrationTokenVerify(user.email, user.name, user.id, token);
+ sendEmailForRegistrationTokenVerify(user.email, user.name, user.id, token);
+ return true
 
 };
 

@@ -3,28 +3,6 @@ const createHttpError = require("http-errors");
 const mailTransporter = require('../../utils/transporter');
 
 
-// setup smtp for mail sender
-// const mailTransporter = (_req, _res, next) => {
-//   try {
-//     const transporter = nodemailer.createTransport({
-//       // host: 'makalamengineeringconstruction.com',
-//       service: 'gmail',
-//       auth: {
-//         user: process.env.TRANSPORT_OWNER,
-//         pass: process.env.TRANSPORT_OWNER_SECRET
-//       }
-//     });
-//     return transporter;
-//   } catch (err) {
-//     console.log('error created in mailTransporter', err)
-
-//     let error = new Error(err)
-//     error.status = 400,
-//       next(err)
-//   }
-// }
-
-
 // Send Email with OTP for verify email
 const sendEmailForRegistrationTokenVerify = async (email, username, userId, token) => {
   try {

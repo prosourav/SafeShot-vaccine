@@ -43,12 +43,12 @@ services:
       DB_PASSWORD :  'testpassword'
       DB_CONNECTION_URL :  'mongodb://mongodb:27017'
       DB_URL_QUERY :  ''
-      DB_NAME : 'safeshot_vaccination'
+      DB_NAME : 'safeshot_vaccination-doc'
       ACCESS_TOKEN_SECRET :  'Secret'
       REFRESH_TOKEN_SECRET :  'TopSecret'
       TRANSPORT_OWNER :  'prosourav49@gmail.com'
       TRANSPORT_OWNER_SECRET :  'cdlyrpkfhllfzmep'
-      CLIENT_APPLICATION_URL :  'http://localhost:8000/api/v1/verify'
+      CLIENT_APPLICATION_URL :  'http://localhost:3000/auth/verify'
       # this node container will not work if below app is not working
     depends_on:
       - mongodb

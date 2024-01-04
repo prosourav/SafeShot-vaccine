@@ -16,13 +16,10 @@ const { controllers: reviewController } = require('../api/v1/review');
 router
   .get('/api/v1/availability', appointmentController.availability);
 
-// verify user email while registration
-router
-  .get('/api/v1/verify/:token', authValidator.verifyTokenRequestValidator, requestValidator, authController.verifyUserToken);
-
 // Auth routes
 router
   .post('/api/v1/auth/register', authValidator.registerRequestValidator, requestValidator, authController.register)
+  .get('/api/v1/auth/verify/:token', authValidator.verifyTokenRequestValidator, requestValidator, authController.verifyUserToken)
   .post('/api/v1/auth/login', authValidator.loginRequestValidator, requestValidator, authController.login)
   .post('/api/v1/auth/refresh', authValidator.refreshRequestValidator, requestValidator, authController.refresh)
   .post('/api/v1/auth/logout', authenticate, authValidator.logoutRequestValidator, requestValidator, authController.logout)
