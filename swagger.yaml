@@ -88,6 +88,38 @@ paths:
           $ref: '#/components/responses/500'
         '409':
           $ref: '#/components/responses/409'  
+  '/auth/verify/{token}':
+    get:
+      description: Verify email address
+      tags:
+        - Auth
+      parameters:
+        - $ref: '#/components/parameters/tokenParam'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Email verification successful
+        '400':
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Resource not found
+        '404':  
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
   '/auth/login':
     post:
       description: Login to your account
@@ -167,38 +199,6 @@ paths:
                   message:
                     type: string
                     example: Invalid credentials
-        '404':  
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
-  '/auth/verify/{token}':
-    get:
-      description: Verify email address
-      tags:
-        - Auth
-      parameters:
-        - $ref: '#/components/parameters/tokenParam'
-      responses:
-        '200':
-          description: Successful
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Email verification successful
-        '400':
-          description: Not Found!
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Resource not found
         '404':  
           $ref: '#/components/responses/404'
         '500':
@@ -307,7 +307,6 @@ paths:
           $ref: '#/components/responses/401'
         '500':
             $ref: '#/components/responses/500'         
-
   '/availability':
     get:
       tags:
