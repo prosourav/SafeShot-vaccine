@@ -41,8 +41,12 @@ const registerRequestValidator = [
 const verifyTokenRequestValidator = [
   param('token')
     .notEmpty()
+    .withMessage('Invalid token')
+    .bail()
+    .trim()
     .isString().withMessage('Invalid token')
-    .escape(),
+    .escape()
+    .withMessage('Invalid token')
 ];
 
 const loginRequestValidator = [
