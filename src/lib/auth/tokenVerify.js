@@ -1,6 +1,12 @@
 const createHttpError = require("http-errors");
 const { findUserByProperty, updateItem } = require("../user");
 
+/**
+ * Searching user with the token if it is null then token is already used and response not a valid token otherwise true
+ * @param {string} property
+ * @returns {(boolean | string)} true
+ * */ 
+
 const verifyUserToken = async (property) => {
   const user = await findUserByProperty(property);
   if (user) {
