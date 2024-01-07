@@ -8,7 +8,8 @@ const config = {
   expands: [],
   status: '',
   filter: '',
-  vaccines: ['Pneumonia', 'Covid', 'Viral']
+  vaccines: ['Pneumonia', 'Covid', 'Viral'],
+  exp:'1h'
 };
 
 module.exports = Object.freeze(config);

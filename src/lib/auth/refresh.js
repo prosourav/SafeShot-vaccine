@@ -6,7 +6,7 @@ const RefreshToken = require('../../model/RefreshToken');
 const { generateToken } = require('../token');
 const { addDays } = require('date-fns');
 
-const refresh = async ({ id, token, issuedIp }) => {
+const refresh = async ({ id, refreshToken, issuedIp }) => {
 
   const user = await findUserByProperty({_id: id});
 
@@ -14,7 +14,7 @@ const refresh = async ({ id, token, issuedIp }) => {
     throw createHttpError.NotFound();
   };
 
-  const userToken = await RefreshToken.findOne({token});
+  const userToken = await RefreshToken.findOne({ token: refreshToken });
   if(!userToken) throw createHttpError.NotFound('User does not exist!');
   if (userToken.user.toString() === id && userToken.isActive){
     // generate access token
@@ -35,7 +35,7 @@ const refresh = async ({ id, token, issuedIp }) => {
 
     const accessTokenGen = generateToken({
       payload: payloadAccess, secret: process.env.ACCESS_TOKEN_SECRET,
-      expiresIn: '10m'
+      expiresIn: '1h'
     });
     const refreshTokenGen = generateToken({
       payload: payloadRefresh, secret: process.env.REFRESH_TOKEN_SECRET,
@@ -52,7 +52,7 @@ const refresh = async ({ id, token, issuedIp }) => {
       name: user.name,
       role: user.role,
       email: user.email,
-      token: { accessToken: accessTokenGen, refresToken: refreshTokenGen }
+      token: { accessToken: accessTokenGen, refreshToken: refreshTokenGen }
     };
 
   }

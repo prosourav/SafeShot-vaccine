@@ -6,11 +6,11 @@ const { generateToken } = require('../../../../lib/token');
 const createHttpError = require('http-errors');
 
 const refresh = async (req, res, next) => {
-  const { id, token } = req.body;
+  const { id, refreshToken } = req.body;
   // console.log({ name, email, password });
 
   try {
-    const data = await authService.refresh({ id, token, issuedIp: req.clientIp });
+    const data = await authService.refresh({ id, refreshToken, issuedIp: req.clientIp });
 
     // response
     const response = {

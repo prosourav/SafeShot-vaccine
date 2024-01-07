@@ -1,12 +1,13 @@
 require('dotenv').config();
 const createHttpError = require('http-errors');
 const jwt = require('jsonwebtoken');
+const defaults = require('../../config/defaults');
 
 const generateToken = ({
   payload,
   algorithm = 'HS256',
   secret = process.env.ACCESS_TOKEN_SECRET,
-  expiresIn = '30m',
+  expiresIn = defaults.exp,
 }) => {
   try {
     return jwt.sign(payload, secret, {

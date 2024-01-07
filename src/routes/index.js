@@ -14,7 +14,7 @@ const { controllers: reviewController } = require('../api/v1/review');
 
 // get all available dates for appointment
 router
-  .get('/api/v1/availability', appointmentController.availability);
+  .get('/api/v1/availability', authenticate, appointmentController.availability);
 
 // Auth routes
 router
