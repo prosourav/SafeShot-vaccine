@@ -1,9 +1,5 @@
 require('dotenv').config();
-const { addDays } = require('date-fns');
 const authService = require('../../../../lib/auth/index');
-const RefreshToken = require('../../../../model/RefreshToken');
-const { generateToken } = require('../../../../lib/token');
-const createHttpError = require('http-errors');
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -21,7 +17,6 @@ const login = async (req, res, next) => {
         appointments: '/api/v1/appointments',
       },
     };
-
     res.status(200).json(response);
   } catch (err) {
     next(err);

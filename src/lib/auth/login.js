@@ -12,6 +12,10 @@ const login = async ({ email, password, issuedIp }) => {
     throw createHttpError.NotFound('Requested resource not found')
   }
 
+  if(user.status !== 'approved'){
+    throw createHttpError.BadRequest("Please verify your email address")
+  }
+
   const matched = await hashMatched(password, user.password);
   if (!matched) {
     throw createHttpError.Unauthorized('Invalid credentials')
@@ -60,7 +64,7 @@ const login = async ({ email, password, issuedIp }) => {
     name: user.name,
     role: user.role,
     email: user.email,
-    token: { accessToken: accessTokenGen, refresToken: refreshTokenGen }
+    token: { accessToken: accessTokenGen, refreshToken: refreshTokenGen }
   };
 
 };
