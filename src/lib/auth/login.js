@@ -45,7 +45,7 @@ const login = async ({ email, password, issuedIp }) => {
 
   const accessTokenGen = generateToken({
     payload: payloadAccess, secret: process.env.ACCESS_TOKEN_SECRET,
-    expiresIn: '1h'
+    expiresIn: '2m'
   });
   const refreshTokenGen = generateToken({
     payload: payloadRefresh, secret: process.env.REFRESH_TOKEN_SECRET,

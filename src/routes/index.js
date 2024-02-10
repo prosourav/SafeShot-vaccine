@@ -27,7 +27,7 @@ router
 router
   .route('/api/v1/appointments')
   .get(authenticate, setFilterByRole, appointmentValidator.allappointmentsValidator, requestValidator, appointmentController.findAllItem)
-  .post(authenticate, authorize(['user', 'admin']), appointmentValidator.appointmentCreateValidator, requestValidator, appointmentController.create)
+  .post(authenticate, authorize(['user', 'admin']), appointmentController.create)
 // get a singe appointment details or update/delete 
 router
   .route('/api/v1/appointments/:id')

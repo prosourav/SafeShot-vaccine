@@ -7,9 +7,6 @@ const authenticate = async (req, _res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = verifyToken({ token });
 
-
-    console.log('decoded token: ' + JSON.stringify(decoded, null, 2));
-
     const user = await userService.findUserByEmail(decoded.email);
    
     if (!user) {

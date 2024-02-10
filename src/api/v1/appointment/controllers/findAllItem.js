@@ -11,6 +11,7 @@ const findAllItems = async (req, res, next) => {
   const search = req.query.search || defaults.search;
   const { filter } = req;
   const status = req.query.status || defaults.status;
+
   try {
 
     // data
@@ -20,17 +21,21 @@ const findAllItems = async (req, res, next) => {
       limit,
       sortType,
       sortBy,
-      search, 
+      search,
       status
     });
+
     const data = query.getTransformedItems({
       items: appointments,
       path: '/appointments',
-      selection: ['_id', 'name','status','email', 'vaccine', 'link', 'date'],
+      selection: ['_id', 'name', 'status', 'email', 'vaccine', 'link', 'date'],
     });
 
-    // pagination
-    const totalItems = await appointmentService.count({ filter, search });
+
+
+    // // pagination
+    const totalItems = await appointmentService.count({ filter, search, status });
+
     const pagination = query.getPagination({ totalItems, limit, page });
 
     // HATEOAS Links
@@ -50,6 +55,7 @@ const findAllItems = async (req, res, next) => {
       links,
     });
   } catch (e) {
+    console.log(e);
     next(e);
   }
 };

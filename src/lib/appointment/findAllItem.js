@@ -18,6 +18,7 @@ const findAllItem = async ({
     filterSearch = { $and: [{ name: { $regex: search, $options: 'i' } }] } :
     filterSearch = { $and: [filter, { name: { $regex: search, $options: 'i' } }] }
 
+
   if (status) {
     filterSearch.$and.push({status: status});
   };
