@@ -2,14 +2,13 @@ const defaults = require('../../../../config/defaults');
 const reviewService = require('../../../../lib/review');
 
 const create = async (req, res, next) => {
-  const { body, appointmentId, status = defaults.status } = req.body;
+  const { body, appointmentId } = req.body;
 
   try {
 
     let review = await reviewService.create({
       appointmentId,
       comment: body,
-      status,
       user: req.user,
     });
 

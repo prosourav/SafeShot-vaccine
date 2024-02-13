@@ -22,7 +22,7 @@ router
   .get('/api/v1/auth/verify/:token', authValidator.verifyTokenRequestValidator, requestValidator, authController.verifyUserToken)
   .post('/api/v1/auth/login', authValidator.loginRequestValidator, requestValidator, authController.login)
   .post('/api/v1/auth/refresh', authValidator.refreshRequestValidator, requestValidator, authController.refresh)
-  .post('/api/v1/auth/logout', authenticate, authValidator.logoutRequestValidator, requestValidator, authController.logout)
+  .delete('/api/v1/auth/logout', authenticate, authValidator.logoutRequestValidator, requestValidator, authController.logout)
 // take appointment and get all appointment
 router
   .route('/api/v1/appointments')

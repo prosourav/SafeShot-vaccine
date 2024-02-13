@@ -4,7 +4,7 @@ const appointmentService = require("../appointment");
 const itemExist = require("./itemExist");
 
 
-const create = async ({ appointmentId, body, user, status }) => {
+const create = async ({ appointmentId, body, user }) => {
 
   if (!appointmentId || !body || !user) {
     const error = new Error('Invalid parameters');
