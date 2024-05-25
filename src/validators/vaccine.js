@@ -37,7 +37,7 @@ const allvaccineValidator = [
 
   query("name")
     .optional()
-    .isIn(['Viral', 'Covid', 'Pneumonia'])
+    .isIn(['viral', 'covid', 'pneumonia'])
     .withMessage('Invalid query parameter')
 ];
 

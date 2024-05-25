@@ -5,7 +5,7 @@ const getProfile = async ({ id }) => {
   if (!id) { throw createHttpError.BadRequest() };
   const user = await User.findById(id).populate({
     path: 'vaccines',
-    select: 'name appointment',
+    select: 'name appointment updatedAt',
     // strictPopulate: false,
   });
   if (!user) { throw createHttpError.NotFound(); };

@@ -1,4 +1,3 @@
-// const createUser = require('./createUser');
 const itemExist = require('./itemExist');
 const findUserByEmail = require('./findUserByEmail');
 const createUser = require('./createUser');
@@ -12,6 +11,7 @@ const changeAdmin = require('./changeAdmin');
 const findAllItem = require('./findAllItem');
 const count = require('./count');
 const create = require('./create');
+const getAdmin = require('./findAdmin');
 
 module.exports = {
   create,
@@ -26,5 +26,6 @@ module.exports = {
   findSingleItem,
   changeAdmin,
   findAllItem,
-  count
+  count,
+  getAdmin
 };

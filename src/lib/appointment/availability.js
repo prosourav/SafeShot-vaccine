@@ -1,26 +1,31 @@
 // const { isFuture } = require("date-fns");
-const { format, addDays } = require('date-fns');
-const Appointment = require('../../model/Appointment');
+const { format, addDays, isWeekend } = require("date-fns");
+const Appointment = require("../../model/Appointment");
 
 const availability = async () => {
-
-  //this week's all dates 
+  //this week's all dates
   let dates = [];
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; dates.length < 7; i++) {
     const date = addDays(new Date(), i);
-    dates.push(format(date, "yyyy-MM-dd"));
-  };
+    if (!isWeekend(date)) {
+      dates.push(format(date, "yyyy-MM-dd"));
+    }
+  }
+
+  // console.log(dates);
 
   // getting all appointments of this week
   const data = await Appointment.find({
     date: {
       $gte: dates[0],
-      $lte: dates[dates.length - 1]
+      $lte: dates[dates.length - 1],
     },
-    status: 'pending'
+    status: "pending",
   });
 
-//convertting array to obj for convenience 
+  // console.log(data);
+
+  //convertting array to obj for convenience
   const dateObj = data.reduce((acc, cur) => {
     const key = cur.date.toISOString().split("T")[0];
     if (!(key in acc)) {
@@ -31,10 +36,12 @@ const availability = async () => {
     return acc;
   }, {});
 
-  //creating final available dates  
-  Object.keys(dateObj).forEach(item => {
+  // console.log(dateObj);
+
+  //creating final available dates
+  Object.keys(dateObj).forEach((item) => {
     if (dateObj[item].length > 3) {
-      dates = dates.filter(date => date !== item);
+      dates = dates.filter((date) => date !== item);
     }
   });
 

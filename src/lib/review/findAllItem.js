@@ -15,11 +15,13 @@ const findAllItem = async ({
   const populateOptions = [{ path: 'appointmentId', select: 'vaccine date status' }, { path: 'user', select: 'name email' }];
 
   
-  const reviews = await Review.find(status && { status })
+  // const reviews = await Review.find(status && { status })
+  const reviews = await Review.find()
     .populate(populateOptions)
     .sort(sortStr)
     .skip(page * limit - limit)
     .limit(limit);
+
     
 // TODO: Refactor this using a function
   if (!expandsValues) {

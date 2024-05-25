@@ -2,6 +2,7 @@ const userService = require('../../../../lib/user');
 
 const updateProfile = async (req, res, next) => {
   const id = req.user.id;
+
   try {
     const profile = await userService.updateProfile(id, req.body);
     delete profile._id;

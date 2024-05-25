@@ -1,6 +1,7 @@
 # check all the available dates for the appointments
 GET http://localhost:8000/api/v1/availability
-
+Content-Type: application/application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MThlNmY5YWU3MDkxYzA5ZDhmZTcwNyIsIm5hbWUiOiJVc2VyIG9uZSIsImVtYWlsIjoiYmF4b2phNzA5N0BldG9weXMuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTM4NjA2NTEsImV4cCI6MTcxMzg2NDI1MX0.ygwdGzDI-DmXgot16i25NPLqF_EVggBhc46qPTdPjio
 ###
 POST http://localhost:8000/api/v1/auth/register
 Content-Type: application/json
@@ -41,7 +42,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjgyMTQyZ
 ###
 GET  http://localhost:8000/api/v1/users/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjgyMTQyZTY1MjY3ZTg2M2RlY2QxMSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk3NjUyNTE1LCJleHAiOjE2OTc2NTQzMTV9.W39I9q-RoykbnUe_fZGJ1tNOPdURM_Nm8KumVjvpNLk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MThlMzExZDlkYTBiZTM2MWZmNWJmMSIsIm5hbWUiOiJBZG1pbiBhZG1pbiIsImVtYWlsIjoic291cmF2LnNhaGFAY29kZWNsb3Vkcy5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTM1MjI3OTUsImV4cCI6MTcxMzUyNjM5NX0.VqkYOfa3z0rZFzSOz-jJOzZeRRpZVmcYkVznR_IOLeA
 ###
 POST  http://localhost:8000/api/v1/appointments
 Content-Type: application/json
@@ -130,12 +131,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2O
 }
 
 ###
-GET http://localhost:8000/api/v1/users/653d0591fc9aa161781d9132
+GET http://localhost:8000/api/v1/users/6618e311d9da0be361ff5bf1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2NmODhlZWQxY2Q3NDk5Y2RlNTc5NSIsIm5hbWUiOiJTb3VyYXYgU2FoYSIsImVtYWlsIjoiZGV2LnNvdXJhdnNhaGFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk4NzQyMjEyLCJleHAiOjE2OTg3NDQwMTJ9.8TyURMOTE90K2mC2-DpLXeaxSQqYfTHTQK-k6Z6rD-4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MThlMzExZDlkYTBiZTM2MWZmNWJmMSIsIm5hbWUiOiJBZG1pbiBhZG1pbiIsImVtYWlsIjoic291cmF2LnNhaGFAY29kZWNsb3Vkcy5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTM1MjI3OTUsImV4cCI6MTcxMzUyNjM5NX0.VqkYOfa3z0rZFzSOz-jJOzZeRRpZVmcYkVznR_IOLeA
 
 ###
-PATCH  http://localhost:8000/api/v1/users/6533d46d90d39c49def57971
+PATCH  http://localhost:8000/api/v1/users/6618e311d9da0be361ff5bf1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzNkMzQ2OTBkMzljNDlkZWY1Nzk2NSIsIm5hbWUiOiJEZXZzb3VyYXYiLCJlbWFpbCI6ImRldi5zb3VyYXZzYWhhQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5ODM0Mzk0MywiZXhwIjoxNjk4MzQ1NzQzfQ.-zHdswF9y7wz98Ta_-YeqbXFRHgPThZMl4fvUfquW8k
 
@@ -165,6 +166,44 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2NmODhlZ
   "name":"Pneumonia"
 }
 
+//chat
+###
+POST http://localhost:8000/api/v1/conversations/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MThlNmY5YWU3MDkxYzA5ZDhmZTcwNyIsIm5hbWUiOiJVc2VyIG9uZSIsImVtYWlsIjoiYmF4b2phNzA5N0BldG9weXMuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTM5NTk3MzAsImV4cCI6MTcxMzk2MzMzMH0.8IW9H8nxhabCCL046VIrGDRcCoBmLDEq0ycnAZPNDIs
+
+{
+  "senderId":"6618e6f9ae7091c09d8fe707",
+  "receiverId":"661cd57beb955d517a4a87ba"
+}
+
 ###
 
+POST http://localhost:8000/api/v1/conversations/get
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MThlNmY5YWU3MDkxYzA5ZDhmZTcwNyIsIm5hbWUiOiJVc2VyIG9uZSIsImVtYWlsIjoiYmF4b2phNzA5N0BldG9weXMuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTM5NTQ5MTAsImV4cCI6MTcxMzk1ODUxMH0.ZRCbAryWfEQS2BIxhtCZpbYf5Gh6PFDXOmirYgxwSRQ
 
+{
+  "senderId":"6618e6f9ae7091c09d8fe707",
+  "receiverId":"66226899b4dc0a86e844e124"
+}
+
+###
+POST http://localhost:8000/api/v1/messages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MThlNmY5YWU3MDkxYzA5ZDhmZTcwNyIsIm5hbWUiOiJVc2VyIG9uZSIsImVtYWlsIjoiYmF4b2phNzA5N0BldG9weXMuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTM5NTQ5MTAsImV4cCI6MTcxMzk1ODUxMH0.ZRCbAryWfEQS2BIxhtCZpbYf5Gh6PFDXOmirYgxwSRQ
+
+{
+    "conversationId":"6628e114d5d11cdfc30a1d11",
+    "senderId": "66226899b4dc0a86e844e124",
+    "receiverId": "6618e6f9ae7091c09d8fe707",
+    "text": "test msg"
+}
+
+###
+
+GET  http://localhost:8000/api/v1/messages/6628e114d5d11cdfc30a1d11
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MThlNmY5YWU3MDkxYzA5ZDhmZTcwNyIsIm5hbWUiOiJVc2VyIG9uZSIsImVtYWlsIjoiYmF4b2phNzA5N0BldG9weXMuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTM5NTQ5MTAsImV4cCI6MTcxMzk1ODUxMH0.ZRCbAryWfEQS2BIxhtCZpbYf5Gh6PFDXOmirYgxwSRQ
+
+###

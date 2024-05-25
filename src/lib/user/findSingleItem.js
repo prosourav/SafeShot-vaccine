@@ -5,7 +5,7 @@ const getSingleItem = async ({ id }) => {
   if (!id) { throw badRequest() }
   const user = await User.findById(id).populate({
     path: 'vaccines',
-    select: 'name appointment',
+    select: 'name appointment createdAt',
     // strictPopulate: false,
   });
   if (!user) { throw notFound() };

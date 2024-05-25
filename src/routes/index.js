@@ -2,15 +2,18 @@ const router = require('express').Router();
 const { authValidator, appointmentValidator, vaccinevalidator, userValidator, reviewValidator } = require('../validators');
 const { controllers: authController } = require('../api/v1/auth');
 const { controllers: appointmentController } = require('../api/v1/appointment');
+const { controllers: reviewController } = require('../api/v1/review');
+const { controllers: chatController } = require('../api/v1/chat');
+const { controllers: imageController } = require('../api/v1/image');
+const { controllers: userController } = require('../api/v1/user');
+const { controllers: vaccineController } = require('../api/v1/vaccine');
+const { controllers: pdfController } = require('../api/v1/pdf');
 const { requestValidator } = require('../middleware/requestValidator');
 const authenticate = require('../middleware/authenticate');
 const authorize = require('../middleware/authorize');
 const setFilterByRole = require('../middleware/setFilterByRole');
 const ownership = require('../middleware/ownerShip');
-const { controllers: userController } = require('../api/v1/user');
-const { controllers: vaccineController } = require('../api/v1/vaccine');
 const hasPermission = require('../middleware/hasPermission');
-const { controllers: reviewController } = require('../api/v1/review');
 
 // get all available dates for appointment
 router
@@ -31,9 +34,9 @@ router
 // get a singe appointment details or update/delete 
 router
   .route('/api/v1/appointments/:id')
-  .get(authenticate, hasPermission('Appointment'), appointmentValidator.appointmentSpecificValidator, requestValidator, appointmentController.findSingleItem)
+  .get(authenticate, appointmentValidator.appointmentSpecificValidator, requestValidator, hasPermission('Appointment'), appointmentController.findSingleItem)
   .patch(authenticate, authorize(['admin']), appointmentValidator.appointmentSpecificValidator, requestValidator, appointmentController.updateItem)
-  .delete(authenticate, authorize(['user', 'admin']), hasPermission('Appointment'), appointmentValidator.appointmentSpecificValidator, requestValidator, ownership('Appointment'), appointmentController.deleteItem);
+  .delete(authenticate, authorize(['user', 'admin']), appointmentValidator.appointmentSpecificValidator, requestValidator, hasPermission('Appointment'), ownership('Appointment'), appointmentController.deleteItem);
 // mark a appointment as completed
 router
   .route('/api/v1/appointments/complete/:appointmentId')
@@ -51,8 +54,8 @@ router
 // update or delete review
 router
    .route('/api/v1/reviews/:id')
-   .patch(authenticate, authorize(['user', 'admin']), hasPermission('Review'), reviewValidator.findSingleItemValidator, requestValidator, reviewController.updateItem)
-   .delete(authenticate, authorize(['user', 'admin']), hasPermission('Review'), reviewValidator.findSingleItemValidator, requestValidator, reviewController.deleteItem);
+   .patch(authenticate, authorize(['user', 'admin']), reviewValidator.findSingleItemValidator, requestValidator, hasPermission('Review'), reviewController.updateItem)
+   .delete(authenticate, authorize(['user', 'admin']), reviewValidator.findSingleItemValidator, requestValidator, hasPermission('Review'), reviewController.deleteItem);
 // get or create a new user
 router
   .route('/api/v1/users')
@@ -74,15 +77,42 @@ router
   .post(authenticate, authorize(['admin']), vaccinevalidator.vaccineAddRequestValidator, requestValidator, vaccineController.create)
   .get(authenticate, authorize(['admin', 'doctor']), vaccinevalidator.allvaccineValidator, requestValidator, vaccineController.findAllItem);
 
+
+
+  router.post('/api/v1/generate_certificate', pdfController.generatePDF);
+  router.get("/api/v1/image_url", authenticate, authorize(['admin', 'doctor', 'user']),imageController.getImageUrl);
+
+  router.get("/api/v1/admin/details",authenticate, authorize(['doctor', 'user']),chatController.getAdmin);
+
+
+  router.post("/api/v1/conversations/add",authenticate, authorize(['admin', 'doctor', 'user']),chatController.conversationAdd);
+  router.post("/api/v1/conversations/get",authenticate, authorize(['admin', 'doctor', 'user']),chatController.conversationGet);
+  
+  router.post('/api/v1/messages',authenticate, authorize(['admin', 'doctor', 'user']), chatController.messageAdd);
+  router.get('/api/v1/messages/:id',authenticate, authorize(['admin', 'doctor', 'user']), chatController.messageGet);
+
+
 module.exports = router;
 
-//TODO:
+
 // doc update
 // clean and optimise code
-// github update
 
-// ### v3
-// 1. Create a proviton for unverified user to verify later on
-// 2. Forgot password
-// 3. Review Search by user name
-// 4. Find all appointments by a date
+// v2.0
+// review
+// 3. Create a proviton for unverified user to verify later on**
+// 4. Forgot password**
+// 5. Find all appointments by a date
+
+
+
+
+
+// Done
+// implement limited slots for a day & create slots multiple-slot for a specific day (allready implemented 3vaccines max a day)
+// removed holidays
+// implement search with id in appointment (already implemented in old file)
+// (WIP chat and photo)
+// Fix bug in table sorting infinite scrolling(Problem Found in Table need to show loading instead odf table)
+
+

@@ -11,6 +11,8 @@ const findAllItem = async ({
 }) => {
 
   let filterSearch = { name: { $regex: search, $options: 'i' } };
+  filterSearch = { email: { $regex: search, $options: 'i' } };
+
   if (filter) {
     filterSearch['status'] = filter;
   }

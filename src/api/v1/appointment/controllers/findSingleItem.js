@@ -1,18 +1,21 @@
-const appointmentService = require('../../../../lib/appointment');
+const appointmentService = require("../../../../lib/appointment");
 
 const findSingleItem = async (req, res, next) => {
   const id = req.params.id;
-  const expand = req.query.expand || '';
+  if (!id) {
+    throw new Error("Id is required");
+  }
+
+  const expand = req.query.expand || "";
 
   try {
-
     const appointemnt = await appointmentService.findSingleItem({ id, expand });
     delete appointemnt._id;
     const response = {
       data: appointemnt,
       links: {
         self: `/appointments/${appointemnt.id}`,
-        appointemnts: '/appointmtments'
+        appointemnts: "/appointmtments",
       },
     };
 

@@ -56,7 +56,7 @@ const alluserValidator = [
 
   query("sort_by")
     .optional()
-    .isIn(['createdAt', 'updatedAt', 'date', 'name', 'vaccine'])
+    .isIn(['createdAt', 'updatedAt', 'date', 'name', 'vaccine', 'email', 'role'])
     .withMessage('Invalid query parameter'),
 
   query("status")
@@ -74,7 +74,7 @@ const findSingleItemValidator =[
   param('id')
     .notEmpty()
     .isString().withMessage('Invalid appointment id')
-    .escape(),
+    .escape(), 
 ];
 
 

@@ -23,7 +23,7 @@ const findAllItem = async (req, res, next) => {
       search,
       filter,
     });
-    // console.log('controller',users);
+    
     const data = getTransformedItems({
       items: users,
       path: '/users',
